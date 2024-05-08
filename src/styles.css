@@ -5,3 +5,17 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.w-600 {
+    max-width: 600px;
+}
+
+.w-400 {
+    max-width: 400px;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}

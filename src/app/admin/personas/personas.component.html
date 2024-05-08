@@ -1,0 +1,62 @@
+<div class="choose">
+    <button (click)="selected = 1" [className]="selected == 1 ? 'btn btn-choose selected': 'btn btn-choose'">Clientes</button>
+    <button (click)="selected = 2" [className]="selected == 2 ? 'btn btn-choose selected': 'btn btn-choose'">Atletas</button>
+</div>
+
+<ng-container *ngIf="selected == 1; then cliente else atleta"></ng-container>
+<ng-template #cliente>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                
+                <div class="lista-personas">
+                    <h1>Lista Clientes</h1>
+                    <div class="card">
+                        <img src="https://via.placeholder.com/150" class="card-img-left" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Nombre de la persona</h5>
+                            <div class="card-actions">
+                                <a href="#" class="btn btn-primary">Editar</a>
+                                <a href="#" class="btn btn-danger">Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="registrar-persona">
+                    <h1>Registrar Cliente</h1>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</ng-template>
+<ng-template #atleta>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                
+                <div class="lista-personas">
+                    <h1>Lista Atletas</h1>
+                    <div class="card">
+                        <img src="https://via.placeholder.com/150" class="card-img-left" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Nombre de la persona</h5>
+                            <div class="card-actions">
+                                <a href="#" class="btn btn-primary">Editar</a>
+                                <a href="#" class="btn btn-danger">Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="registrar-persona">
+                    <h1>Registrar Atleta</h1>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</ng-template>
