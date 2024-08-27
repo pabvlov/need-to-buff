@@ -1,0 +1,93 @@
+<section class="info">
+    <div class="simple-navbar">
+        <button class="btn btn-light volver"><i class="fa-solid fa-arrow-left" (click)="volver()"></i></button>
+        <h1 class="gym-acronym">{{ community.acronym }}</h1>
+    </div>
+    <div class="admin">
+        <button class="btn btn-danger">Administrar</button>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-8 col-xl-8">
+            <section class="banners">
+                <div id="banner" class="carousel slide">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#banner-images" [attr.data-bs-slide-to]="banner.index-1"
+                            class="active" [attr.aria-current]="banner.index == bannerPosition ? 'true':'false'"
+                            aria-label="Slide" *ngFor="let banner of banners"
+                            [ngClass]="banner.index == bannerPosition ? 'active':''"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item" *ngFor="let banner of banners"
+                            [ngClass]="banner.index == bannerPosition ? 'active':''">
+                            <img [src]="banner.url" class="d-block w-100 bannerImage"
+                                [alt]="banner.description == null ? '' : banner.description">
+                            <div class="carousel-caption d-none d-md-block">
+                                <p>{{ banner.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#banner-images"
+                        data-bs-slide="prev" (click)="back()">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#banner-images"
+                        data-bs-slide="next" (click)="next()">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+        <div class="col-12 col-md-12 col-lg-4 col-xl-4">
+            <div class="card establishments">
+                <div class="card-header">
+                    <h2 class="color-primary text-center">Establecimientos</h2>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <div *ngFor="let establishment of establishments"
+                            class="list-group-item list-group-item-action">
+                            <a>{{ establishment.name }}</a>
+                            <p>{{ establishment.address }}</p>
+                            <p>Aforo: {{ establishment.capacity }}</p>
+                            <div class="members">
+                                <div class="member" *ngFor="let member of establishment.athletes">
+                                    <img [src]="member.image == null ? 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg' : member.image"
+                                        alt="" class="member-image">
+                                    <a href="#" class="member-name">{{ member.athlete_name }} {{ member.athlete_lastname
+                                        }}</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="community-info">
+        <div class="container-fluid">
+            <div class="community-description">
+                <p>{{ community.description }}</p>
+            </div>
+            <div class="gym-presentation">
+                <img [src]="community.logo == null ? 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg' : community.logo"
+                    alt="" class="gym-logo">
+                <h1 class="social-reason">{{ community.razon_social }} [{{ community.acronym }}]</h1>
+            </div>
+            <!-- instagram y facebook -->
+            <div class="social-media">
+                <a href="https://instagram.com/{{ community.instagram }}" target="_blank" class="instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://facebook.com/{{ community.facebook }}" target="_blank" class="facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

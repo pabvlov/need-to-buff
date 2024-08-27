@@ -1,1 +1,147 @@
 <a routerLink="/admin/director">Admin</a>
+
+<section id="presentation">
+    <div class="filter"></div>
+    <div class="container zindex">
+        <div class="navbar">
+            <ng-container *ngIf="screenWidth < 776; then mobile;else web"></ng-container>
+            <ng-template #mobile>
+                
+            </ng-template>
+            <ng-template #web>
+                <div class="navbar__logo">
+                    <img src="../../assets/images/need_to_buff.png" id="logo" class="img-fluid img-thumbnail" alt="logo">
+                </div>
+                <div class="navbar__menu">
+                    <a routerLink="/home">Home</a>
+                    <a href="#about-us">About</a>
+                    <a href="#contact">Contact</a>
+                    <a routerLink="/auth/login">Login</a>
+                </div>
+            </ng-template>
+        </div>
+        <div id="title_ntb">
+            <h1 class="color-primary">Need to Buff</h1>
+            <p class="text-dark">La aplicación que necesitas para tu gimnasio</p>
+        </div>
+    </div>
+</section>
+
+<section class="our-offers container">
+    <div class="our-offers__content">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <div class="card">
+                    <i class="fa-regular fa-window-restore color-primary"></i>
+                    <hr>
+                    <div class="card-body">
+                        <h5 class="card-title">Aplicación</h5>
+                        <p class="card-text"><strong>Need to Buff</strong> es una aplicación de gestión, sirve para
+                            solucionar tus problemas del gimnasio.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <div class="card">
+                    <i class="fa-regular fa-window-restore color-primary"></i>
+                    <hr>
+                    <div class="card-body">
+                        <h5 class="card-title">Aplicación</h5>
+                        <p class="card-text"><strong>Need to Buff</strong> es una aplicación de gestión, sirve para
+                            solucionar tus problemas del gimnasio.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <div class="card">
+                    <i class="fa-regular fa-window-restore color-primary"></i>
+                    <hr>
+                    <div class="card-body">
+                        <h5 class="card-title">Aplicación</h5>
+                        <p class="card-text"><strong>Need to Buff</strong> es una aplicación de gestión, sirve para
+                            solucionar tus problemas del gimnasio.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-3 col-sm-12">
+                <img src="../../assets/images/need_to_buff.png" class="img-fluid img-thumbnail" alt="logo">
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-9 col-sm-12">
+                <h2 class="color-primary">Sobre nosotros</h2>
+                <p class="text-dark">Somos un equipo que brinda una solución informática para dar una gestión ópmita a
+                    un gimnasio de cualquier índole.</p>
+                <p class="text-dark">Nuestro objetivo es que la gestión de un gimnasio sea lo más sencilla posible, para
+                    que los dueños y administradores puedan centrarse en lo que realmente importa, los usuarios.</p>
+                <p class="text-dark">Con <strong>Need to Buff</strong> podrás tener un control total de tu gimnasio,
+                    desde la gestión de los usuarios hasta la gestión de las clases.</p>
+                <a href="" class="color-secondary">Ver mas</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="affiliates">
+    <div class="container">
+        <h2 class="color-primary text-center">Afiliados</h2>
+        <div class="row center">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 center">
+                <img src="../../assets/images/cegichi.png" class="img-fluid" alt="logo">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="mt-4 p-5 bg-primary text-white rounded">
+        <h1>Contacto</h1>
+        <form action="mailto:fernandahenriquez2004@gmail.com">
+            <div class="mb-2">
+                <label for="nombreUsuario" class="form-label">Tu nombre</label>
+                <input type="text" class="form-control" id="nombreUsuario" placeholder="Carlos">
+            </div>
+            <div class="mb-2">
+                <label for="mailUsuario" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="mailUsuario" placeholder="name@example.com">
+            </div>
+            <div class="mb-2">
+                <label for="textoMail" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="textoMail" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-light">Enviar</button>
+        </form>
+    </div>
+</section>
+
+<section id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <h3 class="text-light">Need to Buff</h3>
+                <p class="text-white">La aplicación que necesitas para tu gimnasio</p>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <h3 class="text-light">Contacto</h3>
+                <p class="text-white">Calle UwuOwO #123</p>
+                <p class="text-white">Teléfono: 978569972</p>
+                <p class="text-white">Email:
+                    <a href="mailto: pablojavierprietocepeda&#64;gmail.com">
+                        pablojavierprietocepeda&#64;gmail.com
+                    </a>
+                </p>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <h3 class="text-light">Redes sociales</h3>
+                <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-square"></i></a>
+                <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter-square"></i></a>
+            </div>
+        </div>
+    </div>
+</section>

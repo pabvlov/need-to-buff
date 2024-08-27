@@ -1,0 +1,56 @@
+<div class="register_container">
+    <div class="card animate__animated animate__bounceInUp">
+        <button class="color-primary transparent btn-left" (click)="step = 0" *ngIf="step != 0">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <ng-container *ngIf="step == 0; then person; else pass"></ng-container>
+        <ng-template #person>
+            <h3>Ingreso</h3>
+        <br>
+        <form class="uwu" [formGroup]="personForm" (submit)="next()">
+            <!-- Correo -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="correo"><strong>Correo</strong></label>
+                <input type="text" id="correo" class="form-control" formControlName="mail"/>
+            </div>
+
+            <span class="info text-center">{{ info }}</span>
+            <div class="col">
+                <a routerLink="/auth/register" class="link">¿No tienes cuenta? Regístrate</a>
+            </div>
+
+            <br>
+
+            <!-- Botón para enviar el formulario -->
+            <button type="submit" class="btn btn-block">Siguiente</button>
+        </form>
+        </ng-template>
+        <ng-template #pass><!-- Contraseña -->
+            <br>
+            <h3>Bienvenido,</h3>
+            <h4>{{ fullname }}</h4>
+        <br>
+        <form class="uwu" [formGroup]="passwordForm" (submit)="login()">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="contraseña"><strong>Contraseña</strong></label>
+                <input type="password" id="contraseña" class="form-control" formControlName="password" autocomplete="new-password" />
+            </div>
+            
+            <span class="info text-center">{{ passInfo }}</span>
+            <br>
+            <div class="row mb-4">
+                <div class="col d-flex justify-content-center">
+                    <!-- Checkbox -->
+                    <div class="form-check">
+                        <label class="form-check-label" for="recuerdame"> Recordarme </label>
+                        <input formControlName="recuerdame" class="form-check-input" type="checkbox" value=""
+                            id="recuerdame" checked />
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-block">Ingresar</button>
+        </form>
+        </ng-template>
+    </div>
+</div>

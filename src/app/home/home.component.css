@@ -1,0 +1,123 @@
+#presentation {
+    background: url(../../assets/images/fondo.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    min-height: 600px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.filter {
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    color: white;
+    /* put father's height */
+    flex-grow: 1;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.navbar {
+    background-color: white;
+    width: 70%;
+    min-height: 5rem;
+    max-height: 7rem;
+    top: 2rem;
+    margin: 0 auto;
+    border-radius: 30px;
+    padding: 10px;
+    box-shadow: -4px 42px 36px -37px rgba(0,0,0,0.75);
+}
+
+.navbar__menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    padding: 0 60px;
+}
+
+.navbar__logo {
+    width: 30%;
+    /* center */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    /* bold */
+    font-weight: bold;
+}
+
+#logo {
+    /* fit height and width */
+    height: 80px;
+
+}
+
+.fa-regular {
+    font-size: 8rem;
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+.card {
+    border: 0;
+    margin: 3rem 0;
+}
+
+.our-offers__title {
+    padding-top: 3rem;
+    text-align: center;
+}
+
+#title_ntb {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #03BB85;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    padding: 15% 0 0;
+}
+
+.zindex {
+    z-index: 10;
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+#about-us {
+    padding-top: 6rem;
+}
+
+#footer {
+    background: url(../../assets/images/fondo_footer.png);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-position: center;
+    padding-top: 6rem;
+    height: 600px;
+}
+
+#affiliates {
+    
+    padding: 10% 0;
+    display: flex;
+    justify-content: center;
+}
+
+#contact {
+    margin: 10% 20%;
+}

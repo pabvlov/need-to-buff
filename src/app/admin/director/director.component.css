@@ -1,0 +1,13 @@
+.offcanvas-btn {
+    margin: 10px;
+}
+
+.quantity {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+p {
+    margin: 0;
+}

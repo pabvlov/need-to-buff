@@ -1,0 +1,11 @@
+<section class="fullscreen">
+    <button class="logout btn btn-danger"><i class="fa-solid fa-x" (click)="logout()"></i></button>
+    <div class="container">
+        <div class="row communities">
+            <a [routerLink]="['/home/gym/'+ community.id]" routerLinkActive="router-link-active"  *ngFor="let community of communities" class="community" [ngStyle]="{'background-image': 'url(' + community.logo + ')'}">
+                <h2 class="color-primary text-center">{{ community.acronym }}</h2>
+            </a>
+            
+        </div>
+    </div>
+</section>

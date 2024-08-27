@@ -1,3 +1,7 @@
+:root {
+    --primary-color: #03BB85;
+    --secondary-color: #1900ff;
+  }
 /* You can add global styles to this file, and also import other style files */
 
 * {
@@ -18,4 +22,26 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
+}
+
+.color-primary {
+    color: #03BB85;
+}
+
+.color-secondary {
+    color: #1900ff !important;
+}
+
+strong {
+    color: #03BB85;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    border: 0;
+    
 }

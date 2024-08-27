@@ -1,0 +1,101 @@
+.info {
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    margin: 20px;
+}
+
+.simple-navbar {
+    display: flex;
+    align-items: center;
+}
+
+.admin {
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.gym-acronym {
+    font-size: 2em;
+    font-weight: bold;
+    margin-right: 20px;
+    margin-left: 40px;
+}
+
+.banners {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px;
+}
+
+.carousel-item, .carousel-inner {
+    width: 100%;
+    height: 600px;
+    object-fit: fill;
+}
+
+.establishments {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card.establishments {
+    margin-top: 20px;
+}
+
+.bannerImage {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+}
+
+.members {
+    display: flex;
+    flex-direction: column;
+}
+
+.member, .gym-presentation {
+    display: flex;
+    align-items: center;
+}
+
+.member-image, .gym-logo {
+    margin: 5px;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+}
+
+.social-reason {
+    margin-left: 20px;
+}
+
+.h1 {
+    margin-left: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+p {
+    margin: 0;
+}
+
+.fa-facebook, .fa-instagram, .fa-twitter {
+    font-size: 1.5em;
+    margin-left: 10px;
+}
+
+.fa-facebook {
+    color: #3b5998;
+}
+
+.fa-instagram {
+    color: #e4405f;
+}
