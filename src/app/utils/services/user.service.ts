@@ -4,6 +4,8 @@ import { map, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { FindUserResponse } from '../interfaces/find-user-response';
 import { Community, UserCommunities } from '../interfaces/user-communities';
+import { FindUsersResponse, User } from '../interfaces/find-users-response';
+import { PostAthlete } from '../interfaces/post-athlete';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +39,33 @@ export class UserService {
       }});
 
   }
+
+  getUserByEstablishmentId(establishmentId: number): Observable<FindUsersResponse> {
+    return this.httpClient.get<FindUsersResponse>(environment.apiUrl + environment.endpoints.findUsers + `?id_establishment=${establishmentId}`)
+  }
+
+  fillUsersByEstablishment(id_establishment: number) {
+    this.getUserByEstablishmentId(id_establishment).subscribe((data: FindUsersResponse) => {
+      if (data != null) {
+        this.usersResponse = data;
+      }
+    })
+  }
+
+  usersResponse: FindUsersResponse = {
+    users: []
+  }
+
+  get getUsers(): User[] {
+    return this.usersResponse.users;
+  }
+
+  createClient(mail: string, id_establishment: number): Observable<PostAthlete> {
+    console.log(mail, id_establishment);
+    
+    return this.httpClient.post<PostAthlete>(environment.apiUrl + environment.endpoints.createClient, { mail, id_establishment });
+  }
+
 
 
 }

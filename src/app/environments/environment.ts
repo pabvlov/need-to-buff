@@ -5,7 +5,10 @@ export const environment = {
         login: '/auth/login',
         register: '/auth/register',
         findUser: '/user/find',
+        findUsers: '/user/athletes',
         userCommunities: '/user/communities',
         communityInfo: '/community/info',
+        worklines: '/worklines',
+        createClient: '/user/athlete/createInactive'
     }
 }

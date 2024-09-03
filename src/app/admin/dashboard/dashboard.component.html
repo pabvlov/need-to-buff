@@ -1,0 +1,68 @@
+<section id="dashboard">
+    <div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem; height: 100vh; position: static;">
+        <a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip">
+            <img src="../../../assets/images/need_to_buff.png" alt="" class="img-fluid">
+        </a>
+        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+            <li class="nav-item">
+                <a href="#" class="nav-link active py-3 border-bottom text-center" aria-current="page" title=""
+                    data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                    <i class="fa-solid fa-gauge-high"></i>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" id="establishmentAthletes"
+                    data-bs-placement="right" data-bs-original-title="Dashboard">
+                    <i class="fa-solid fa-person-running"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
+                    data-bs-placement="right" data-bs-original-title="Orders">
+                    <i class="fa-solid fa-person"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
+                    data-bs-placement="right" data-bs-original-title="Products">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
+                    data-bs-placement="right" data-bs-original-title="Customers">
+                    <i class="fa-solid fa-people-group"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="dropdown border-top">
+            <a href="#"
+                class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle"
+                id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
+                <li><a class="dropdown-item" href="#">New project...</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Sign out</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container-fluid content">
+        {{ getSelectedEstablishment | json}}
+        <div class="btn-group">
+            <a class="btn btn-outline-primary"
+                    [ngClass]="id_establishment == e.id ? 'active' : ''" 
+                    aria-current="page" 
+                    *ngFor="let e of establishments; index as i;"
+                    (click)="index = i; id_establishment = e.id; update();"
+                    [routerLink]="['/admin/dashboard/' + id_community + '/' + e.id]">{{ e.name }} {{ e.id }}</a>
+        </div>
+        <app-athletes></app-athletes>
+    </div>
+</section>

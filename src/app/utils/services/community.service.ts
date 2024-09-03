@@ -29,8 +29,6 @@ export class CommunityService {
 
   setGymLandingInfo(communityId: number) {
     this.getGymLandingInfo(communityId).subscribe((data: GymLandingInfo) => {
-      console.log(data);
-      
       if (data != null) {
         this.banners = data.banners;
         this.community = data.community;
@@ -39,7 +37,21 @@ export class CommunityService {
     });
   }
 
+  get getEstablishments(): Establishment[] {
+    return this.establishments;
+  }
   
+  selectedEstablishment: Establishment = {
+    id: 0,
+    name: '',
+    address: '',
+    capacity: 0,
+    athletes: [],
+  }
+
+  getSelectedEstablishment(id_establishment: number): Establishment {
+    return this.selectedEstablishment = this.establishments.find(est => est.id === id_establishment)!;
+  }
 
 
 

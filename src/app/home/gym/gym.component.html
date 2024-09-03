@@ -4,7 +4,7 @@
         <h1 class="gym-acronym">{{ community.acronym }}</h1>
     </div>
     <div class="admin">
-        <button class="btn btn-danger">Administrar</button>
+        <a [routerLink]="['/admin/dashboard/' + communityId]" routerLinkActive="router-link-active" class="btn btn-danger">Administrar</a>
     </div>
 </section>
 <div class="container-fluid">

@@ -1,0 +1,43 @@
+<div class="head">
+    <h3>Usuarios y Atletas</h3>
+    <!-- Boton crear atleta -->
+    <button class="btn btn-primary">Crear Atleta</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createClient">Nuevo
+        Cliente</button>
+</div>
+
+<br>
+
+<ul class="list-group">
+    <div *ngFor="let u of getUsers">
+        <li class="list-group-item">
+            <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="firstRadio">
+            <label class="form-check-label" for="firstRadio">{{ u.name }} {{ u.lastname }}</label>
+        </li>
+    </div>
+</ul>
+
+<div class="modal fade" id="createClient" tabindex="-1" aria-labelledby="createClientLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createClientLabel">Agregar Cliente</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="createClient" (submit)="addClient()">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Correo del usuario:</label>
+                        <input type="mail" class="form-control" id="recipient-name" formControlName="mail">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Close</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!createClient.valid">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{ mail }}

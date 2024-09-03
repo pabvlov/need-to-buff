@@ -1,0 +1,17 @@
+.fa-solid .active{
+    color: --var(--secondary-color);
+    font-size: 1.5rem;
+}
+
+.fa-solid {
+    color: --var(--primary-color);
+    font-size: 1.5rem;
+}
+
+#dashboard {
+    display: flex;
+}
+
+.content {
+    margin-top: 3.5rem;
+}
