@@ -4,8 +4,9 @@ import { map, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { FindUserResponse } from '../interfaces/find-user-response';
 import { Community, UserCommunities } from '../interfaces/user-communities';
-import { FindUsersResponse, User } from '../interfaces/find-users-response';
-import { PostAthlete } from '../interfaces/post-athlete';
+import { AthleteUser, FindUsersResponse, User } from '../interfaces/find-users-response';
+import { ResponseAthlete } from '../interfaces/post-athlete';
+import { CreateAthlete } from '../interfaces/create-athlete';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,20 @@ export class UserService {
     this.getUserByEstablishmentId(id_establishment).subscribe((data: FindUsersResponse) => {
       if (data != null) {
         this.usersResponse = data;
+        this.athletes = [];
+        data.users.forEach(user => {
+          user.athletes.forEach(athlete => {
+            this.athletes.push({
+              id: athlete.id,
+              name: athlete.name,
+              lastname: athlete.lastname,
+              birthdate: athlete.birthdate,
+              image: athlete.image,
+              work_line: athlete.work_line,
+              user: user
+            });
+          });
+        });
       }
     })
   }
@@ -56,14 +71,19 @@ export class UserService {
     users: []
   }
 
+  athletes: AthleteUser[] = [];
+
   get getUsers(): User[] {
     return this.usersResponse.users;
   }
 
-  createClient(mail: string, id_establishment: number): Observable<PostAthlete> {
-    console.log(mail, id_establishment);
+  createClient(mail: string, id_establishment: number): Observable<ResponseAthlete> {
     
-    return this.httpClient.post<PostAthlete>(environment.apiUrl + environment.endpoints.createClient, { mail, id_establishment });
+    return this.httpClient.post<ResponseAthlete>(environment.apiUrl + environment.endpoints.createClient, { mail, id_establishment });
+  }
+
+  createAthlete(athlete: CreateAthlete): Observable<ResponseAthlete> {    
+    return this.httpClient.post<ResponseAthlete>(environment.apiUrl + environment.endpoints.createAthlete, athlete);
   }
 
 

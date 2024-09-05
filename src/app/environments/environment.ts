@@ -9,6 +9,7 @@ export const environment = {
         userCommunities: '/user/communities',
         communityInfo: '/community/info',
         worklines: '/worklines',
-        createClient: '/user/athlete/createInactive'
+        createClient: '/user/athlete/createInactive',
+        createAthlete: '/user/athlete/create',
     }
 }

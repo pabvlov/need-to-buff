@@ -1,21 +1,34 @@
 <div class="head">
     <h3>Usuarios y Atletas</h3>
-    <!-- Boton crear atleta -->
-    <button class="btn btn-primary">Crear Atleta</button>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createClient">Nuevo
         Cliente</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAthlete">Nuevo
+        Atleta</button>
 </div>
 
 <br>
-
-<ul class="list-group">
-    <div *ngFor="let u of getUsers">
-        <li class="list-group-item">
-            <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="firstRadio">
-            <label class="form-check-label" for="firstRadio">{{ u.name }} {{ u.lastname }}</label>
-        </li>
-    </div>
-</ul>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Fecha Nacimiento</th>
+        <th scope="col">Línea Trabajo</th>
+        <th scope="col">Apoderado</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let athlete of athletes">
+        <th scope="row">{{ athlete.id }}</th>
+        <td>{{ athlete.name }}</td>
+        <td>{{ athlete.lastname }}</td>
+        <td>{{ athlete.birthdate | date:"dd / MM / yyyy" }}</td>
+        <td>{{ athlete.work_line }}</td>
+        <td>{{ athlete.user.name }} {{ athlete.user.lastname }}</td>
+      </tr>
+    </tbody>
+  </table>
 
 <div class="modal fade" id="createClient" tabindex="-1" aria-labelledby="createClientLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -32,7 +45,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Cerrar</button>
                     <button type="submit" class="btn btn-primary" [disabled]="!createClient.valid">Agregar</button>
                 </div>
             </form>
@@ -40,4 +53,51 @@
     </div>
 </div>
 
-{{ mail }}
+<div class="modal fade" id="createAthlete" tabindex="-1" aria-labelledby="createAthleteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createClientLabel">Agregar Cliente</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="createAthlete" (submit)="addAthlete()">
+                <div class="modal-body">
+                    <div>
+                        <label for="recipient-name" class="col-form-label">Nombre</label>
+                        <input type="text" class="form-control" id="recipient-name" formControlName="name">
+                    </div>
+                    <div>
+                        <label for="recipient-lastname" class="col-form-label">Apellido</label>
+                        <input type="text" class="form-control" id="recipient-lastname" formControlName="lastname">
+                    </div>
+                    <div>
+                        <label for="recipient-user" class="col-form-label">Usuario a Cargo:</label>
+                        <select class="form-select" id="recipient-user" aria-label="Selecciona el usuario que será el apoderado" formControlName="id_user_in_charge">
+                            <option [value]="user.id" *ngFor="let user of getUsers; index as i" [selected]="i === 0"> {{ user.name }} {{ user.lastname }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="recipient-birthdate" class="col-form-label">Fecha de Nacimiento</label>
+                        <input type="date" class="form-control" id="recipient-birthdate" formControlName="birthdate">
+                    </div>
+                    <div>
+                        <label for="recipient-establishment" class="col-form-label">Establecimiento</label>
+                        <select class="form-select" id="recipient-establishment" aria-label="Selecciona el establecimiento donde entrenará" formControlName="id_establishment">
+                            <option [value]="establishment.id" *ngFor="let establishment of establishments; index as i" [selected]="i === 0"> {{ establishment.name }} - {{ establishment.address }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="recipient-workline" class="col-form-label">Línea de Trabajo</label>
+                        <select class="form-select" id="recipient-workline" aria-label="Selecciona el establecimiento donde entrenará" formControlName="id_workline">
+                            <option [value]="workline.id" *ngFor="let workline of worklines; index as i" [selected]="i === 0"> {{ workline.identifier }} - {{ workline.name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Close</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!createAthlete.valid">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

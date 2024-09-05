@@ -1,13 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../utils/services/user.service';
-import { User } from '../../../utils/interfaces/find-users-response';
+import { AthleteUser, User } from '../../../utils/interfaces/find-users-response';
 import { CommonModule } from '@angular/common';
 import { Worklines } from '../../../utils/interfaces/worklines';
 import { WorklineService } from '../../../utils/services/workline.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SwalService } from '../../../utils/services/swal.service';
-import { PostAthlete } from '../../../utils/interfaces/post-athlete';
+import { CreateAthlete } from '../../../utils/interfaces/create-athlete';
+import { ResponseAthlete } from '../../../utils/interfaces/post-athlete';
+import { CommunityService } from '../../../utils/services/community.service';
+import { Establishment } from '../../../utils/interfaces/gym-landing-info';
 
 @Component({
   selector: 'app-athletes',
@@ -26,6 +29,7 @@ export class AthletesComponent {
   constructor(private route: ActivatedRoute, 
               private userService: UserService, 
               private worklineService: WorklineService, 
+              private communityService: CommunityService,
               private fb: FormBuilder,
               private swal: SwalService) { }
 
@@ -39,12 +43,29 @@ export class AthletesComponent {
     return this.userService.getUsers;
   }
 
+  get athletes(): AthleteUser[] {
+    return this.userService.athletes
+  }
+
   get worklines(): Worklines[] {
     return this.worklineService.worklines;
   }
 
+  get establishments(): Establishment[] {
+    return this.communityService.getEstablishments;
+}
+
   createClient = this.fb.group({
     mail: ['', [Validators.required, Validators.email]],
+  });
+
+  createAthlete = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    lastname: ['', [Validators.required, Validators.minLength(3)]],
+    birthdate: ['', [Validators.required, Validators.nullValidator]],
+    id_user_in_charge: [0, [Validators.required]],
+    id_establishment: [0, [Validators.required]],
+    id_workline: [0, [Validators.required]],
   });
 
   get mail() {
@@ -53,7 +74,30 @@ export class AthletesComponent {
   
   addClient() {
     this.swal.loading();
-    this.userService.createClient(this.mail!, this.id).subscribe( (data: PostAthlete) => {
+    this.userService.createClient(this.mail!, this.id).subscribe( (data: ResponseAthlete) => {
+      if (data.affectedRows != 0) {
+        this.swal.success(
+          'Client registered successfully',
+          'El usuario ahora es tu cliente y aparecerá en tu dashboard'
+        );
+        this.userService.fillUsersByEstablishment(this.id);
+      } else {
+        this.swal.error('Error', data.message!);
+      }
+    });
+  }
+
+  addAthlete() {
+    this.swal.loading();
+    const athlete: CreateAthlete = {
+      name: this.createAthlete.value.name!?.toString(),
+      lastname: this.createAthlete.value.lastname!?.toString(),
+      birthdate: this.createAthlete.value.birthdate!?.toString(),
+      id_user_in_charge: this.createAthlete.value.id_user_in_charge!,
+      id_establishment: this.id,
+      id_workline: this.createAthlete.value.id_workline!
+    };
+    this.userService.createAthlete(athlete).subscribe( (data: ResponseAthlete) => {
       if (data.affectedRows != 0) {
         this.swal.success(
           'Athlete created successfully',

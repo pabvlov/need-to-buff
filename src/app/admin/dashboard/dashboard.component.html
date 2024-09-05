@@ -5,32 +5,32 @@
         </a>
         <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
             <li class="nav-item">
-                <a href="#" class="nav-link active py-3 border-bottom text-center" aria-current="page" title=""
+                <a class="nav-link py-3 border-bottom text-center" aria-current="page" title="" [ngClass]="{active: show == 'dashboard'}" (click)="show = 'dashboard';"
                     data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                     <i class="fa-solid fa-gauge-high"></i>
                 </a>
             </li>
             <li>
-                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" id="establishmentAthletes"
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" id="establishmentAthletes" [ngClass]="{active: show == 'athletes'}" (click)="show = 'athletes';"
                     data-bs-placement="right" data-bs-original-title="Dashboard">
                     <i class="fa-solid fa-person-running"></i>
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
-                    data-bs-placement="right" data-bs-original-title="Orders">
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" [ngClass]="{active: show == 'clients'}" (click)="show = 'clients'"
+                    data-bs-placement="right" data-bs-original-title="Clients">
                     <i class="fa-solid fa-person"></i>
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
-                    data-bs-placement="right" data-bs-original-title="Products">
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" [ngClass]="{active: show == 'calendar'}" (click)="show = 'calendar'"
+                    data-bs-placement="right" data-bs-original-title="Calendar">
                     <i class="fa-solid fa-calendar-days"></i>
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
-                    data-bs-placement="right" data-bs-original-title="Customers">
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" [ngClass]="{active: show == 'groups'}" (click)="show = 'groups'"
+                    data-bs-placement="right" data-bs-original-title="Groups">
                     <i class="fa-solid fa-people-group"></i>
                 </a>
             </li>
@@ -54,8 +54,7 @@
     </div>
 
     <div class="container-fluid content">
-        {{ getSelectedEstablishment | json}}
-        <div class="btn-group">
+            <div class="btn-group d-flex justify-content-center">
             <a class="btn btn-outline-primary"
                     [ngClass]="id_establishment == e.id ? 'active' : ''" 
                     aria-current="page" 
@@ -63,6 +62,9 @@
                     (click)="index = i; id_establishment = e.id; update();"
                     [routerLink]="['/admin/dashboard/' + id_community + '/' + e.id]">{{ e.name }} {{ e.id }}</a>
         </div>
-        <app-athletes></app-athletes>
+
+        <br><br><br>
+        
+        <app-athletes *ngIf="show == 'athletes'"></app-athletes>
     </div>
 </section>

@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   id_community: number = 0;
   id_establishment: number = 0;
   index: number = 1;
+  show: string = 'dashboard';
   
   ngOnInit(): void {
     this.route.params.subscribe(res => {

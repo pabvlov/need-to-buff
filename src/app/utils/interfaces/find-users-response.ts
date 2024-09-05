@@ -20,3 +20,13 @@ export interface Athlete {
     image:     null;
     work_line: string;
 }
+
+export interface AthleteUser {
+    id:        number;
+    name:      string;
+    lastname:  string;
+    birthdate: Date;
+    image:     null;
+    work_line: string;
+    user:      User;
+}
