@@ -7,6 +7,8 @@ import { Community, UserCommunities } from '../interfaces/user-communities';
 import { AthleteUser, FindUsersResponse, User } from '../interfaces/find-users-response';
 import { ResponseAthlete } from '../interfaces/post-athlete';
 import { CreateAthlete } from '../interfaces/create-athlete';
+import { Group } from '../interfaces/group';
+import { SimplePost } from '../interfaces/simple-post';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +33,7 @@ export class UserService {
   }
 
   communities: Community[] = [] 
+
   
 
   getCommunities() {
@@ -44,6 +47,7 @@ export class UserService {
   getUserByEstablishmentId(establishmentId: number): Observable<FindUsersResponse> {
     return this.httpClient.get<FindUsersResponse>(environment.apiUrl + environment.endpoints.findUsers + `?id_establishment=${establishmentId}`)
   }
+
 
   fillUsersByEstablishment(id_establishment: number) {
     this.getUserByEstablishmentId(id_establishment).subscribe((data: FindUsersResponse) => {
@@ -85,7 +89,4 @@ export class UserService {
   createAthlete(athlete: CreateAthlete): Observable<ResponseAthlete> {    
     return this.httpClient.post<ResponseAthlete>(environment.apiUrl + environment.endpoints.createAthlete, athlete);
   }
-
-
-
 }

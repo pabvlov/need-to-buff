@@ -1,0 +1,50 @@
+<h3>Warm Ups</h3>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createWarmup">Nuevo Warm Up</button>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col"><i class="fa-regular fa-hand-point-right"></i></th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let warmup of warmups">
+        <th scope="row">{{ warmup.id }}</th>
+        <td>{{ warmup.name }}</td>
+        <td>
+            <button class="" id="borrar" (click)="delete(warmup.id)"><i class="fa-solid fa-trash-can"></i></button>
+        </td>
+      </tr>
+    </tbody>
+</table>
+
+<div class="modal fade" id="createWarmup" tabindex="-1" aria-labelledby="createWarmupLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createWarmupLabel">Agregar Athleta a Grupo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="createWarmup" (submit)="create()">
+                <div class="modal-body">
+                    <div>
+                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <!-- input name -->
+                        <input type="text" class="form-control" id="recipient-name" formControlName="name">
+                    </div>
+                    <div>
+                        <label for="recipient-single_name" class="col-form-label">Nombre en singular:</label>
+                        <!-- input name -->
+                        <input type="text" class="form-control" id="recipient-single_name" formControlName="single_name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!createWarmup.valid">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

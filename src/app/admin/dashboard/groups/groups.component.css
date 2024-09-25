@@ -1,0 +1,17 @@
+.btn {
+    margin-right: 20px;
+}
+
+.badge {
+    margin-right: 10px;
+}
+
+.fa-trash-can {
+    color: red;
+}
+
+.fa-solid {
+    color: --var(--primary-color);
+    font-size: 1rem;
+    margin: 0 5px;
+}

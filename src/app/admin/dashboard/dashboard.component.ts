@@ -4,17 +4,20 @@ import { CommunityService } from '../../utils/services/community.service';
 import { Establishment } from '../../utils/interfaces/user-communities';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { GymLandingInfo } from '../../utils/interfaces/gym-landing-info';
-import { Observable } from 'rxjs';
 import { UserService } from '../../utils/services/user.service';
-import { User } from '../../utils/interfaces/find-users-response';
 import { WorklineService } from '../../utils/services/workline.service';
+import { GroupsComponent } from './groups/groups.component';
+import { GroupService } from '../../utils/services/group.service';
+import { PlanificationComponent } from './planification/planification.component';
+import { PlanificationService } from '../../utils/services/planification.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
     AthletesComponent,
+    GroupsComponent,
+    PlanificationComponent,
     CommonModule,
     RouterModule
   ],
@@ -33,13 +36,29 @@ export class DashboardComponent implements OnInit {
       this.id_establishment = res['id_establishment'];
       if(this.communityService.establishments.length === 0) {
         this.communityService.setGymLandingInfo(this.id_community);
+        let date = new Date();
+        let yesterday = new Date(date.setDate(date.getDate() - 1));
+        let tomorrow = new Date(date.setDate(date.getDate() + 2));
+        this.planningService.fillDayClasses(this.id_establishment, yesterday.toISOString().split('T')[0], tomorrow.toISOString().split('T')[0]);
         this.userService.fillUsersByEstablishment(this.id_establishment);
         this.worklineService.setWorklines();
+        this.groupService.fillGroups(this.id_establishment);
+        this.groupService.fillDifficulties();
+        this.planningService.fillWarmUps();
+        this.planningService.fillApparatusAndElements();
+        this.planningService.fillPhysicalPreparations();
+        this.planningService.fillClasses(this.id_establishment);
+        
       }
     });
   }
 
-  constructor(private communityService: CommunityService, private route: ActivatedRoute, private userService: UserService, private worklineService: WorklineService) {
+  constructor(private communityService: CommunityService, 
+              private route: ActivatedRoute, 
+              private userService: UserService, 
+              private worklineService: WorklineService,
+              private groupService: GroupService,
+              private planningService: PlanificationService) {
     this.route.params.subscribe(res => {
       this.id_community = res['id_community'];
       this.id_establishment = res['id_establishment'];
@@ -60,6 +79,7 @@ export class DashboardComponent implements OnInit {
 
     update() {
       this.userService.fillUsersByEstablishment(this.id_establishment);
+      this.groupService.fillGroups(this.id_establishment);
     }
   
 }

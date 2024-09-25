@@ -1,0 +1,125 @@
+<h3>Elements</h3>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createElement">Nuevo Elemento</button>
+
+<div>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Aparato</th>
+            <th scope="col">Elemento</th>
+            <th scope="col">Diff</th>
+            <th scope="col">Conexiones</th>
+            <th scope="col"><i class="fa-regular fa-hand-point-right"></i></th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let element of elementsByApparatus">
+          <tr *ngFor="let e of element.elements | slice:1">
+            <th scope="row">{{ e.id }}</th>
+            <td>{{ e.apparatus.name }}</td>
+            <td>{{ e.name }}</td>
+            <td>{{ e.difficulty }}</td>
+            <td>
+                <button class="" data-bs-toggle="modal" data-bs-target="#createAttachment" id="agregar"><i class="fa-solid fa-plus" (click)="chooseElement(e.id, e.apparatus.id)"></i></button>
+                <span class="badge bg-primary" *ngFor="let connection of e.connections">{{ connection.name }}</span>
+            </td>
+            <td>
+                <button class="" id="borrar" (click)="delete(e.id)"><i class="fa-solid fa-trash-can"></i></button>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="modal fade" id="createElement" tabindex="-1" aria-labelledby="createElementLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createElementLabel">Agregar Athleta a Grupo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="createElement" (submit)="create()">
+                <div class="modal-body">
+                    <!-- apparatus -->
+                    <div>
+                        <label for="recipient-apparatus" class="col-form-label">Aparato:</label>
+                        <select class="form-select" id="recipient-apparatus" aria-label="Selecciona el aparato" formControlName="id_apparatus">
+                            <option [value]="a.id" *ngFor="let a of apparatus"> {{ a.name }} / {{ a.gender }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="recipient-name" formControlName="name">
+                    </div>
+                    <div>
+                        <label for="recipient-difficulty" class="col-form-label">Dificultad</label>
+                        <select class="form-select" id="recipient-difficulty" aria-label="Selecciona la dificultad del elemento" formControlName="difficulty">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                            <option value="H">H</option>
+                            <option value="I">I</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="recipient-video" class="col-form-label">Video:</label>
+                        <input type="text" class="form-control" id="recipient-video" formControlName="video">
+                    </div>
+                    <div>
+                        <label for="recipient-image" class="col-form-label">Imagen:</label>
+                        <input type="text" class="form-control" id="recipient-image" formControlName="image">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!createElement.valid">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createAttachment" tabindex="-1" aria-labelledby="createAttachmentLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createAttachmentLabel">Agregar Conexión</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="chooseAttachment" (submit)="updateElement()">
+                <div class="modal-body">
+                    <div>
+                        <label for="recipient-element_connection" class="col-form-label">Conexión:</label>
+                        <select class="form-select" id="recipient-difficulty2" aria-label="Selecciona la dificultad del elemento" formControlName="id_element_connection">
+                            <option [value]="ele.id" *ngFor="let ele of getSelectedElements.elements">{{ ele.name }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="recipient-difficulty2" class="col-form-label">Dificultad</label>
+                        <select class="form-select" id="recipient-difficulty2" aria-label="Selecciona la dificultad del elemento" formControlName="difficulty">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                            <option value="H">H</option>
+                            <option value="I">I</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!chooseAttachment.valid">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

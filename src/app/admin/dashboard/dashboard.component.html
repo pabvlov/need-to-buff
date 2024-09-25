@@ -17,9 +17,9 @@
                 </a>
             </li>
             <li>
-                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" [ngClass]="{active: show == 'clients'}" (click)="show = 'clients'"
-                    data-bs-placement="right" data-bs-original-title="Clients">
-                    <i class="fa-solid fa-person"></i>
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" [ngClass]="{active: show == 'exercises'}" (click)="show = 'exercises'"
+                    data-bs-placement="right" data-bs-original-title="Exercises">
+                    <i class="fa-solid fa-dumbbell"></i>
                 </a>
             </li>
             <li>
@@ -66,5 +66,8 @@
         <br><br><br>
         
         <app-athletes *ngIf="show == 'athletes'"></app-athletes>
+        <app-groups  *ngIf="show == 'groups'"></app-groups>
+        <app-planification *ngIf="show == 'calendar'"></app-planification>
+        <!-- <app-exercises *ngIf="show == 'exercises'"></app-exercises> -->
     </div>
 </section>

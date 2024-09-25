@@ -1,0 +1,27 @@
+.click-class {
+    background-color: #fff !important;
+    transition: .2s ease;
+    padding: 10px;
+}
+
+.click-class:hover {
+    cursor: pointer;
+    background-color: #e2e2e2 !important;
+    box-shadow: 0px 33px 49px -29px rgba(122,122,122,1);
+    transform: translateY(-4px);
+    transition: .2s ease;
+    border-radius: 10px;
+}
+
+.btn-transparent {
+    background-color: transparent;
+    border: none;
+    color: rgb(77, 77, 77);
+    padding: 0;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: left;
+    margin-bottom: 10px;
+    border-top: 1px solid #e2e2e2;
+}

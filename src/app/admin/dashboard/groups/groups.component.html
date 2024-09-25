@@ -1,0 +1,89 @@
+<div class="head">
+    <h3>Grupos</h3>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createGroup">Nuevo
+        Grupo</button>
+</div>
+<br>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Grupo</th>
+        <th scope="col">Nivel</th>
+        <th scope="col">Integrantes</th>
+        <th scope="col"><i class="fa-regular fa-hand-point-right"></i></th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let group of groups">
+        <th scope="row">{{ group.id }}</th>
+        <td>{{ group.name }}</td>
+        <td>{{ group.difficulty_category }}</td>
+        <td>
+            <span class="badge bg-primary" *ngFor="let athlete of group.athletes">{{ athlete.name }}</span>
+        </td>
+        <td>
+            <button class="" data-bs-toggle="modal" data-bs-target="#addAthlete" id="agregar"><i class="fa-solid fa-plus" (click)="updateGroup(group.id)"></i></button>
+            <button class="" data-bs-toggle="modal" data-bs-target="#editGroup" id="borrar"><i class="fa-solid fa-trash-can"></i></button>
+        </td>
+      </tr>
+    </tbody>
+</table>
+
+
+
+<div class="modal fade" id="addAthlete" tabindex="-1" aria-labelledby="addAthleteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addAthleteLabel">Agregar Athleta a Grupo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="addAthlete" (submit)="add()">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="recipient-athlete" class="col-form-label">Correo del usuario:</label>
+                        <select class="form-select" id="recipient-athlete" aria-label="Selecciona el usuario que quieres agregar al grupo" formControlName="id_athlete">
+                            <option [value]="athlete.id" *ngFor="let athlete of athletes"> {{ athlete.name }} {{ athlete.lastname }} {{ athlete.id }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!addAthlete.valid">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createGroup" tabindex="-1" aria-labelledby="createGroupLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createGroupLabel">Agregar Athleta a Grupo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="createGroup" (submit)="create()">
+                <div class="modal-body">
+                    <div>
+                        <label for="recipient-name" class="col-form-label">Nombre del Grupo:</label>
+                        <!-- input name -->
+                        <input type="text" class="form-control" id="recipient-name" formControlName="name">
+                    </div>
+                    <div>
+                        <label for="recipient-diff" class="col-form-label">Nivel:</label>
+                        <!-- input name -->
+                        <select class="form-select" id="recipient-diff" aria-label="Selecciona el usuario que quieres agregar al grupo" formControlName="id_difficulty">
+                            <option [value]="diff.id" *ngFor="let diff of difficulties"> {{ diff.name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!createGroup.valid">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
