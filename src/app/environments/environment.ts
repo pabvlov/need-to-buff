@@ -35,5 +35,7 @@ export const environment = {
         createClass: '/class/create',
         showClasses: '/class/show',
         showClassesByDates: '/class/showBetweenDates',
+        makeAdmin: '/user/setRole',
+        removeAdmin: '/user/unsetRole',
     }
 }

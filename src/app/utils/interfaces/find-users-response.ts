@@ -10,6 +10,12 @@ export interface User {
     birthdate: Date;
     contact:   number;
     athletes:  Athlete[];
+    roles: Rol[];
+}
+
+export interface Rol {
+    id:          number;
+    role: string;
 }
 
 export interface Athlete {

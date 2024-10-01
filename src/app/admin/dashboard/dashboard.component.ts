@@ -10,6 +10,7 @@ import { GroupsComponent } from './groups/groups.component';
 import { GroupService } from '../../utils/services/group.service';
 import { PlanificationComponent } from './planification/planification.component';
 import { PlanificationService } from '../../utils/services/planification.service';
+import { ExercisesComponent } from './exercises/exercises.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +20,8 @@ import { PlanificationService } from '../../utils/services/planification.service
     GroupsComponent,
     PlanificationComponent,
     CommonModule,
-    RouterModule
+    RouterModule,
+    ExercisesComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -47,8 +49,7 @@ export class DashboardComponent implements OnInit {
         this.planningService.fillWarmUps();
         this.planningService.fillApparatusAndElements();
         this.planningService.fillPhysicalPreparations();
-        this.planningService.fillClasses(this.id_establishment);
-        
+        this.planningService.fillClasses(this.id_establishment);        
       }
     });
   }

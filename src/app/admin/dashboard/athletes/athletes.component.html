@@ -1,34 +1,79 @@
-<div class="head">
-    <h3>Usuarios y Atletas</h3>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createClient">Nuevo
-        Cliente</button>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAthlete">Nuevo
-        Atleta</button>
+<br>
+
+<div class="row">
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <h3>Usuarios</h3>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-2">
+                <button class="card w-100" type="button" data-bs-toggle="modal" data-bs-target="#createClient"
+                    style="background-color: rgb(197, 197, 197);">
+                    <div class="add">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                </button>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-2" *ngFor="let user of getUsers">
+                <button class="card w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                    [ngClass]="{'admin': user.roles.length > 0}">
+                    <div class="nombre-usuario text-center pt-2 w-100">
+                        <h6>{{ user.name }} {{ user.lastname }}</h6>
+                    </div>
+                    <div class="usuario-info w-100">
+                        <p class="mail">{{ user.mail }}</p>
+                        <p>{{ user.birthdate | date:"dd / MM / yyyy" }}</p>
+                        <p>+56 {{ user.contact }}</p>
+                    </div>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                    <li *ngIf="user.roles.length > 0"><button class="dropdown-item"
+                            (click)="removeAdmin(user.mail)">Quitar admin.</button></li>
+                    <li *ngIf="user.roles.length == 0"><button class="dropdown-item"
+                            (click)="makeAdmin(user.mail)">Hacer admin.</button></li>
+                    <li><a class="dropdown-item" href="#">Borrar</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Ver Perfil</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <h3>Atletas</h3>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-2">
+                <button class="card w-100" type="button" data-bs-toggle="modal" data-bs-target="#createAthlete"
+                    style="background-color: rgb(197, 197, 197);">
+                    <div class="add">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                </button>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-2" *ngFor="let athlete of athletes">
+                <button class="card w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="nombre-usuario text-center pt-2 w-100">
+                        <h6>{{ athlete.name }} {{ athlete.lastname }}</h6>
+                    </div>
+                    <div class="usuario-info w-100">
+                        <p class="mail">{{ athlete.work_line }}</p>
+                        <p>{{ athlete.birthdate | date:"dd / MM / yyyy" }}</p>
+                        <p>{{ athlete.user.name }} {{ athlete.user.lastname }}</p>
+                    </div>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark">
+
+                    <li><a class="dropdown-item" href="#">Borrar</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Ver Perfil</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
-<br>
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
-        <th scope="col">Fecha Nacimiento</th>
-        <th scope="col">Línea Trabajo</th>
-        <th scope="col">Apoderado</th>
-    </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let athlete of athletes">
-        <th scope="row">{{ athlete.id }}</th>
-        <td>{{ athlete.name }}</td>
-        <td>{{ athlete.lastname }}</td>
-        <td>{{ athlete.birthdate | date:"dd / MM / yyyy" }}</td>
-        <td>{{ athlete.work_line }}</td>
-        <td>{{ athlete.user.name }} {{ athlete.user.lastname }}</td>
-      </tr>
-    </tbody>
-  </table>
 
 <div class="modal fade" id="createClient" tabindex="-1" aria-labelledby="createClientLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -72,8 +117,11 @@
                     </div>
                     <div>
                         <label for="recipient-user" class="col-form-label">Usuario a Cargo:</label>
-                        <select class="form-select" id="recipient-user" aria-label="Selecciona el usuario que será el apoderado" formControlName="id_user_in_charge">
-                            <option [value]="user.id" *ngFor="let user of getUsers; index as i" [selected]="i === 0"> {{ user.name }} {{ user.lastname }}</option>
+                        <select class="form-select" id="recipient-user"
+                            aria-label="Selecciona el usuario que será el apoderado"
+                            formControlName="id_user_in_charge">
+                            <option [value]="user.id" *ngFor="let user of getUsers; index as i" [selected]="i === 0"> {{
+                                user.name }} {{ user.lastname }}</option>
                         </select>
                     </div>
                     <div>
@@ -82,14 +130,19 @@
                     </div>
                     <div>
                         <label for="recipient-establishment" class="col-form-label">Establecimiento</label>
-                        <select class="form-select" id="recipient-establishment" aria-label="Selecciona el establecimiento donde entrenará" formControlName="id_establishment">
-                            <option [value]="establishment.id" *ngFor="let establishment of establishments; index as i" [selected]="i === 0"> {{ establishment.name }} - {{ establishment.address }}</option>
+                        <select class="form-select" id="recipient-establishment"
+                            aria-label="Selecciona el establecimiento donde entrenará"
+                            formControlName="id_establishment">
+                            <option [value]="establishment.id" *ngFor="let establishment of establishments; index as i"
+                                [selected]="i === 0"> {{ establishment.name }} - {{ establishment.address }}</option>
                         </select>
                     </div>
                     <div>
                         <label for="recipient-workline" class="col-form-label">Línea de Trabajo</label>
-                        <select class="form-select" id="recipient-workline" aria-label="Selecciona el establecimiento donde entrenará" formControlName="id_workline">
-                            <option [value]="workline.id" *ngFor="let workline of worklines; index as i" [selected]="i === 0"> {{ workline.identifier }} - {{ workline.name }}</option>
+                        <select class="form-select" id="recipient-workline"
+                            aria-label="Selecciona el establecimiento donde entrenará" formControlName="id_workline">
+                            <option [value]="workline.id" *ngFor="let workline of worklines; index as i"
+                                [selected]="i === 0"> {{ workline.identifier }} - {{ workline.name }}</option>
                         </select>
                     </div>
                 </div>

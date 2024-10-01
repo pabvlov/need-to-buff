@@ -1,9 +1,9 @@
 <div class="container">
-    <div class="d-flex">
-        <h1>Clases</h1>
-        <button type="button" data-bs-toggle="modal" data-bs-target="#create"><i class="fa-solid fa-plus" style="color: #318aff; font-size: 2rem; margin-left: 20px;"></i></button>
+    <div class="d-flex p-3">
+        <h1 class="class-title">Clases</h1>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#create" style="display: flex; flex-direction: column; justify-content: center;"><i class="fa-solid fa-plus" style="color: #318aff; font-size: 2rem; padding: 0 20px;"></i></button>
     </div>
-   
+   <br>
     <div class="row">
         <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12">
             Pasadas
@@ -29,14 +29,14 @@
             </div>
         </div>
         <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12">
-            <div *ngIf="classesFromThisDate.length == 0">No hay clase actual</div>
-            <div class="row" *ngIf="classesFromThisDate.length != 0">
-                <div class="col-12">
+            <div *ngIf="actualClass.length == 0">No hay clase actual</div>
+            <div class="row" *ngIf="actualClass.length != 0">
+                <div class="col-12" *ngFor="let class of actualClass">
                     <button class="btn-transparent">
                         <div class="click-class">
-                            {{ classesFromThisDate[0].id }}
-                          <h5 class="card-title">{{ classesFromThisDate[0].start_date | date: 'short'}}</h5>
-                          <p class="card-text"><i class="fa-solid fa-people-group"></i> {{ classesFromThisDate[0].group.name }}</p>
+                            {{ class.id }}
+                          <h5 class="card-title">{{ class.start_date | date: 'short'}}</h5>
+                          <p class="card-text"><i class="fa-solid fa-people-group"></i> {{ class.group.name }}</p>
                         </div>
                     </button>
                 </div>
@@ -45,7 +45,7 @@
         <div class="col-xl-7 col-lg-3 col-md-4 col-sm-12">
             <div *ngIf="classesFromThisDate.length == 0">No hay próximas clases</div>
             <div class="row" *ngIf="classesFromThisDate.length != 0">
-                <div class="col-6" *ngFor="let class of classesFromThisDate">
+                <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let class of classesFromThisDate">
                     <button class="btn-transparent">
                         <div class="click-class">
                             {{ class.id }}
@@ -60,20 +60,6 @@
         
 
     </div>
-
-    <br>
-
-    <div class="row">
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-            <app-warmups></app-warmups>
-        </div>
-        <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12">
-            <app-elements></app-elements>
-        </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-            <app-physical-preparation></app-physical-preparation>
-        </div>
-    </div>
 </div>
 
 
@@ -81,44 +67,33 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="createWarmupLabel">Agregar Athleta a Grupo</h1>
+                <h1 class="modal-title fs-5" id="createWarmupLabel">Agregar Atleta a Grupo</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form [formGroup]="create" (submit)="createClass()">
                 <div class="modal-body">
                     <div>
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <!-- input name -->
-                        <input type="text" class="form-control" id="recipient-name" formControlName="name">
-                    </div>
-                    <div>
-                        <label for="recipient-single_name" class="col-form-label">Nombre en singular:</label>
-                        <!-- input name -->
-                        <input type="text" class="form-control" id="recipient-single_name" formControlName="single_name">
-                    </div>
-                    <!-- {
-                        "id_group": 1,
-                        "id_user_teacher": 8,
-                        "id_planification": null,
-                        "start_date": "2024-09-24 16:00:00",
-                        "end_date": "2024-09-24 18:00:00",
-                        "id_establishment": 1,
-                        "teacher_assistence": false
-                    } -->
-                    <!-- <div>
                         <label for="recipient-group" class="col-form-label">Grupo:</label>
                         
                         <select class="form-select" id="recipient-group" formControlName="id_group">
                             <option *ngFor="let group of groups" [value]="group.id">{{ group.name }}</option>
                         </select>
-                    </div> -->
-                    <!-- <div>
+                    </div>
+                    <div>
                         <label for="recipient-teacher" class="col-form-label">Profesor:</label>
                         
                         <select class="form-select" id="recipient-teacher" formControlName="id_user_teacher">
-                            <option ></option>
+                            <option *ngFor="let teacher of teachers" [value]="teacher.id">{{ teacher.name }} {{ teacher.lastname }}</option>
                         </select>
-                    </div> -->
+                    </div>
+                    <div>
+                        <label for="recipient-start_date" class="col-form-label">Fecha de inicio:</label>
+                        <input type="datetime-local" class="form-control" id="recipient-start_date" formControlName="start_date">
+                    </div>
+                    <div>
+                        <label for="recipient-end_date" class="col-form-label">Fecha de fin:</label>
+                        <input type="datetime-local" class="form-control" id="recipient-end_date" formControlName="end_date">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Cerrar</button>

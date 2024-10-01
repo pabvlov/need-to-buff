@@ -89,4 +89,24 @@ export class UserService {
   createAthlete(athlete: CreateAthlete): Observable<ResponseAthlete> {    
     return this.httpClient.post<ResponseAthlete>(environment.apiUrl + environment.endpoints.createAthlete, athlete);
   }
+
+  makeAdmin(mail: string, id_establishment: number): Observable<SimplePost> {
+    const body = {
+      user_mail: mail,
+      id_establishment,
+      id_role: 2
+    }
+    console.log(body);
+    
+    return this.httpClient.post<SimplePost>(environment.apiUrl + environment.endpoints.makeAdmin, body);
+  }
+
+  removeAdmin(mail: string, id_establishment: number): Observable<SimplePost> {
+    const body = {
+      user_mail: mail,
+      id_establishment,
+      id_role: 2
+    }
+    return this.httpClient.post<SimplePost>(environment.apiUrl + environment.endpoints.removeAdmin, body);
+  }
 }

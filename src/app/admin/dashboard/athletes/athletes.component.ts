@@ -11,6 +11,7 @@ import { CreateAthlete } from '../../../utils/interfaces/create-athlete';
 import { ResponseAthlete } from '../../../utils/interfaces/post-athlete';
 import { CommunityService } from '../../../utils/services/community.service';
 import { Establishment } from '../../../utils/interfaces/gym-landing-info';
+import { SimplePost } from '../../../utils/interfaces/simple-post';
 
 @Component({
   selector: 'app-athletes',
@@ -106,6 +107,39 @@ export class AthletesComponent {
         this.userService.fillUsersByEstablishment(this.id);
       } else {
         this.swal.error('Error', data.message!);
+      }
+    });
+  }
+
+  makeAdmin(mail: string) {
+    this.swal.loading();
+    console.log(mail);
+    
+    this.userService.makeAdmin(mail, this.establishments.find(e => e.id == this.id)!.id).subscribe( (data: SimplePost) => {
+      if (data.affectedRows != 0) {
+        this.swal.success(
+          'Admin created successfully',
+          'El usuario ahora es administrador de ' + this.establishments.find(e => e.id == this.id)?.name
+        );
+        this.userService.fillUsersByEstablishment(this.id);
+      } else {
+        this.swal.error('Error', data.message!);
+      }
+    });
+  }
+
+  removeAdmin(mail: string) {
+    this.swal.loading();
+    this.userService.removeAdmin(mail, this.establishments.find(e => e.id == this.id)!.id).subscribe( (data: SimplePost) => {
+      if (data.affectedRows != 0) {
+        this.swal.success(
+          'Admin removed successfully',
+          'El usuario ya no es administrador de ' + this.establishments.find(e => e.id == this.id)?.name
+        );
+        this.userService.fillUsersByEstablishment(this.id);
+      } else {
+        this.swal.error('Error', data.message!);
+        
       }
     });
   }

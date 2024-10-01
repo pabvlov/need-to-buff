@@ -1,23 +1,18 @@
 import { Component } from '@angular/core';
-import { WarmupsComponent } from './warmups/warmups.component';
 import { PlanificationService } from '../../../utils/services/planification.service';
-import { ElementsComponent } from './elements/elements.component';
-import { PhysicalPreparationComponent } from './physical-preparation/physical-preparation.component';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SwalService } from '../../../utils/services/swal.service';
 import { CreateClassRequest } from '../../../utils/interfaces/create-class-request';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../../../utils/services/group.service';
+import { UserService } from '../../../utils/services/user.service';
 
 @Component({
   selector: 'app-planification',
   standalone: true,
   imports: [
     CommonModule,
-    WarmupsComponent,
-    ElementsComponent,
-    PhysicalPreparationComponent,
     ReactiveFormsModule
 ],
   templateUrl: './planification.component.html',
@@ -32,7 +27,8 @@ export class PlanificationComponent {
               private swal: SwalService,
               private route: ActivatedRoute,
               private router: Router,
-              private groupsService: GroupService
+              private groupsService: GroupService,
+              private userService: UserService
   ) {
     this.route.params.subscribe(res => {
       this.id_establishment = res['id_establishment'];
@@ -43,12 +39,20 @@ export class PlanificationComponent {
       return this.planningService.dayClasses;
   }
 
+  get actualClass() {
+      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.start_date) <= new Date() && new Date(dayClass.end_date) >= new Date);
+  }
+
   get classesFromThisDate() {
-      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.start_date) > new Date());
+      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.start_date) >= new Date());
   }
 
   get classesBackThisDate() {
       return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.end_date) < new Date());
+  }
+
+  get teachers() {
+      return this.userService.getUsers.filter((user) => user.roles.length > 0);
   }
 
   get groups() {
@@ -84,8 +88,8 @@ export class PlanificationComponent {
           let yesterday = new Date(date.setDate(date.getDate() - 1));
           let tomorrow = new Date(date.setDate(date.getDate() + 2));
           this.planningService.fillDayClasses(this.id_establishment, yesterday.toISOString().split('T')[0], tomorrow.toISOString().split('T')[0]);
-          this.swal.success('Listo', 'Item de Calentamiento creado con éxito');
-          this.router.navigate(['/class/' + data.id_class], { skipLocationChange: false })
+          this.swal.success('Listo', 'La clase se creó con éxito, espera a ser redireccionado');
+          /* this.router.navigate(['/admin/class/' + data.id_class], { skipLocationChange: true }) */
         }
       });
     }
