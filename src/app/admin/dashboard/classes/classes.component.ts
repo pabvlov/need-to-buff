@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, LOCALE_ID } from '@angular/core';
 import { PlanificationService } from '../../../utils/services/planification.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -7,18 +7,22 @@ import { CreateClassRequest } from '../../../utils/interfaces/create-class-reque
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../../../utils/services/group.service';
 import { UserService } from '../../../utils/services/user.service';
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs);
 
 @Component({
-  selector: 'app-planification',
+  selector: 'app-classes',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule
 ],
-  templateUrl: './planification.component.html',
-  styleUrl: './planification.component.css'
+  providers: [{ provide: LOCALE_ID, useValue: 'es' }],
+  templateUrl: './classes.component.html',
+  styleUrl: './classes.component.css'
 })
-export class PlanificationComponent {
+export class ClassesComponent {
 
   id_establishment: number = 0;
 
@@ -48,7 +52,7 @@ export class PlanificationComponent {
   }
 
   get classesBackThisDate() {
-      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.end_date) < new Date());
+      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.end_date) < new Date() && new Date(dayClass.end_date).getUTCDay() == new Date().getUTCDay());
   }
 
   get teachers() {

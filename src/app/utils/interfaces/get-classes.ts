@@ -1,14 +1,11 @@
 export interface GetClasses {
-    id:                   number;
-    id_establishment:     number;
-    id_planification:     number | null;
-    start_date:           Date;
-    end_date:             Date;
-    teacher:              Teacher;
-    planning:             Planning[];
-    warmups:              Warmup[];
-    physicalpreparations: Physicalpreparation[];
-    group:                Group;
+    id:               number;
+    id_establishment: number;
+    start_date:       Date;
+    end_date:         Date;
+    teacher:          Teacher;
+    planning:         Planning | null;
+    group:            Group;
 }
 
 export interface Group {
@@ -20,44 +17,31 @@ export interface Group {
 
 export interface AthleteElement {
     athlete_id:    number;
-    athlete:       AthleteEnum;
+    athlete:       string;
     athlete_image: null;
 }
 
-export enum AthleteEnum {
-    JuliánPrieto = "Julián Prieto",
-    PabloPrieto = "Pablo Prieto",
+export interface Planning {
+    id:                    number;
+    elements:              any[];
+    warm_ups:              WarmUp[];
+    physical_preparations: PhysicalPreparation[];
 }
 
-export interface Physicalpreparation {
+export interface PhysicalPreparation {
     physical_preparation: string;
     quantity:             number;
 }
 
-export interface Planning {
-    apparatus: Apparatus;
-    element:   Element;
-}
-
-export interface Apparatus {
-    name: string;
-}
-
-export interface Element {
-    id:         number;
-    name:       string;
-    video:      null;
-    image:      null;
-    difficulty: string;
+export interface WarmUp {
+    warm_up:       string;
+    quantity:      number;
+    quantity_type: string;
 }
 
 export interface Teacher {
     id:         number;
+    name:       string;
+    lastname:   string;
     assistence: boolean;
-}
-
-export interface Warmup {
-    warm_up:       string;
-    quantity:      number;
-    quantity_type: string;
 }

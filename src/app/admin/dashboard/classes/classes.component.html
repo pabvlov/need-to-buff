@@ -1,27 +1,31 @@
 <div class="container">
+    
     <div class="d-flex p-3">
         <h1 class="class-title">Clases</h1>
         <button type="button" data-bs-toggle="modal" data-bs-target="#create" style="display: flex; flex-direction: column; justify-content: center;"><i class="fa-solid fa-plus" style="color: #318aff; font-size: 2rem; padding: 0 20px;"></i></button>
     </div>
    <br>
+   <h2 *ngIf="actualClass.length != 0">{{ actualClass[0].start_date | date: 'dd' }} de {{ actualClass[0].start_date | date: 'MMMM' }} de {{ actualClass[0].start_date | date: 'yyyy' }}</h2>
     <div class="row">
-        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12">
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12">
             Pasadas
         </div>
         <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12">
             Actual
         </div>
-        <div class="col-xl-7 col-lg-7 col-md-4 col-sm-12">
+        <div class="col-xl-6 col-lg-6 col-md-4 col-sm-12">
             Próximas
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12">
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12">
             <div *ngIf="classesBackThisDate.length == 0">No ha habido clases</div>
             <div class="row" *ngIf="classesBackThisDate.length != 0">
                 <div class="col-12" *ngFor="let backClass of classesBackThisDate">
                     <button class="btn-transparent">
                         <div class="click-class">
-                            {{ backClass.id }}
-                          <h5 class="card-title">{{ backClass.start_date | date: 'short'}}</h5>
+                            <div class="profe">
+                                    <span class="badge bg-primary">{{ backClass.teacher.name }} {{ backClass.teacher.lastname }}</span>
+                            </div>
+                            <h5 class="card-title">{{ backClass.start_date | date: 'HH:mm'}} - {{ backClass.end_date | date: 'HH:mm'}}</h5>
                             <p class="card-text"><i class="fa-solid fa-people-group"></i> {{ backClass.group.name }}</p>
                         </div>
                     </button>
@@ -34,22 +38,26 @@
                 <div class="col-12" *ngFor="let class of actualClass">
                     <button class="btn-transparent">
                         <div class="click-class">
-                            {{ class.id }}
-                          <h5 class="card-title">{{ class.start_date | date: 'short'}}</h5>
-                          <p class="card-text"><i class="fa-solid fa-people-group"></i> {{ class.group.name }}</p>
+                            <div class="profe">
+                                <span class="badge bg-primary">{{ class.teacher.name }} {{ class.teacher.lastname }}</span>
+                            </div>
+                            <h5 class="card-title">{{ class.start_date | date: 'HH:mm'}} - {{ class.end_date | date: 'HH:mm'}}</h5>
+                            <p class="card-text"><i class="fa-solid fa-people-group"></i> {{ class.group.name }}</p>
                         </div>
                     </button>
                 </div>
             </div>
         </div>
-        <div class="col-xl-7 col-lg-3 col-md-4 col-sm-12">
+        <div class="col-xl-6 col-lg-6 col-md-4 col-sm-12">
             <div *ngIf="classesFromThisDate.length == 0">No hay próximas clases</div>
             <div class="row" *ngIf="classesFromThisDate.length != 0">
                 <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let class of classesFromThisDate">
                     <button class="btn-transparent">
                         <div class="click-class">
-                            {{ class.id }}
-                          <h5 class="card-title">{{ class.start_date | date: 'short'}}</h5>
+                            <div class="profe">
+                                <span class="badge bg-primary">{{ class.teacher.name }} {{ class.teacher.lastname }}</span>
+                            </div>
+                          <h5 class="card-title">{{ class.start_date | date: 'HH:mm'}} - {{ class.end_date | date: 'HH:mm'}}</h5>
                           <p class="card-text"><i class="fa-solid fa-people-group"></i> {{ class.group.name }}</p>
                         </div>
                     </button>

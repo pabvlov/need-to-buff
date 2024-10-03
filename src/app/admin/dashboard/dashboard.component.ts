@@ -8,7 +8,7 @@ import { UserService } from '../../utils/services/user.service';
 import { WorklineService } from '../../utils/services/workline.service';
 import { GroupsComponent } from './groups/groups.component';
 import { GroupService } from '../../utils/services/group.service';
-import { PlanificationComponent } from './planification/planification.component';
+import { ClassesComponent } from './classes/classes.component';
 import { PlanificationService } from '../../utils/services/planification.service';
 import { ExercisesComponent } from './exercises/exercises.component';
 
@@ -18,7 +18,7 @@ import { ExercisesComponent } from './exercises/exercises.component';
   imports: [
     AthletesComponent,
     GroupsComponent,
-    PlanificationComponent,
+    ClassesComponent,
     CommonModule,
     RouterModule,
     ExercisesComponent

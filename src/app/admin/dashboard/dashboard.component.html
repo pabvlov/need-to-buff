@@ -34,6 +34,12 @@
                     <i class="fa-solid fa-people-group"></i>
                 </a>
             </li>
+            <li>
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" [ngClass]="{active: show == 'planification'}" (click)="show = 'groups'"
+                    data-bs-placement="right" data-bs-original-title="Groups">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+            </li>
         </ul>
         <div class="dropdown border-top">
             <a href="#"
@@ -67,7 +73,7 @@
         
         <app-athletes *ngIf="show == 'athletes'"></app-athletes>
         <app-groups  *ngIf="show == 'groups'"></app-groups>
-        <app-planification *ngIf="show == 'calendar'"></app-planification>
+        <app-classes *ngIf="show == 'calendar'"></app-classes>
         <app-exercises *ngIf="show == 'exercises'"></app-exercises>
     </div>
 </section>
