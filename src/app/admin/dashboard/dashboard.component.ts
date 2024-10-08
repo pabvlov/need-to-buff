@@ -11,6 +11,7 @@ import { GroupService } from '../../utils/services/group.service';
 import { ClassesComponent } from './classes/classes.component';
 import { PlanificationService } from '../../utils/services/planification.service';
 import { ExercisesComponent } from './exercises/exercises.component';
+import { PlanificationComponent } from './planification/planification.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,7 +22,8 @@ import { ExercisesComponent } from './exercises/exercises.component';
     ClassesComponent,
     CommonModule,
     RouterModule,
-    ExercisesComponent
+    ExercisesComponent,
+    PlanificationComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -38,18 +40,16 @@ export class DashboardComponent implements OnInit {
       this.id_establishment = res['id_establishment'];
       if(this.communityService.establishments.length === 0) {
         this.communityService.setGymLandingInfo(this.id_community);
-        let date = new Date();
-        let yesterday = new Date(date.setDate(date.getDate() - 1));
-        let tomorrow = new Date(date.setDate(date.getDate() + 2));
-        this.planningService.fillDayClasses(this.id_establishment, yesterday.toISOString().split('T')[0], tomorrow.toISOString().split('T')[0]);
-        this.userService.fillUsersByEstablishment(this.id_establishment);
+        this.planificationService.fillDayClasses(this.id_establishment);
+        this.planificationService.fillWarmUps();
+        this.planificationService.fillElementsByApparatus();
+        this.planificationService.fillPhysicalPreparations();
+        this.planificationService.fillClasses(this.id_establishment);    
+        this.planificationService.fillPlanifications(this.id_establishment);   
         this.worklineService.setWorklines();
         this.groupService.fillGroups(this.id_establishment);
         this.groupService.fillDifficulties();
-        this.planningService.fillWarmUps();
-        this.planningService.fillApparatusAndElements();
-        this.planningService.fillPhysicalPreparations();
-        this.planningService.fillClasses(this.id_establishment);        
+        this.userService.fillUsersByEstablishment(this.id_establishment);
       }
     });
   }
@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
               private userService: UserService, 
               private worklineService: WorklineService,
               private groupService: GroupService,
-              private planningService: PlanificationService) {
+              private planificationService: PlanificationService) {
     this.route.params.subscribe(res => {
       this.id_community = res['id_community'];
       this.id_establishment = res['id_establishment'];

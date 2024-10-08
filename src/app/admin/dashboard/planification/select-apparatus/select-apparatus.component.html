@@ -1,0 +1,27 @@
+
+<h3>Elija los aparatos que quieres trabajar</h3>
+<br>
+<div class="row">
+    <h6>Damas</h6>
+    <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let machineF of apparatusF">
+        <button class="btn-transparent" [ngClass]="{'selected': machineSelected.includes(machineF.id)}"
+            (click)="selectApparatus(machineF.id)">
+            <div class="click-class" [ngClass]="{'selected': machineSelected.includes(machineF.id)}">
+                <h5 class="card-title">{{ machineF.name }}</h5>
+                {{ machineSelected.includes(machineF.id) }}
+            </div>
+        </button>
+    </div>
+</div>
+<br>
+<div class="row">
+    <h6>Varones</h6>
+    <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let machineM of apparatusM">
+        <button class="btn-transparent" [ngClass]="{'selected': machineSelected.includes(machineM.id)}"
+            (click)="selectApparatus(machineM.id)">
+            <div class="click-class" [ngClass]="{'selected': machineSelected.includes(machineM.id)}">
+                <h5 class="card-title">{{ machineM.name }}</h5>
+            </div>
+        </button>
+    </div>
+</div>

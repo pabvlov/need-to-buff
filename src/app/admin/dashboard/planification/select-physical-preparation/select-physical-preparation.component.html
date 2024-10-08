@@ -1,0 +1,61 @@
+<div class="row">
+    
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#createPhysicalPreparation">Nueva Preparación Física</button>
+    <br>
+    <br>
+    <h6>Elija el calentamiento que querrás para el entrenamiento</h6>
+    <br>
+    <br>
+    <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let physicalPreparation of physicalPreparations">
+        <button class="btn-transparent" [ngClass]="{'selected': isPhysicalPreparationSelected(physicalPreparation.id)}"
+            (click)="selectPhysicalPreparation(physicalPreparation.id)">
+            <div class="click-class" [ngClass]="{'selected': isPhysicalPreparationSelected(physicalPreparation.id)}">
+                <h5 class="card-title">{{ physicalPreparation.name }}</h5>
+            </div>
+        </button>
+        <div *ngIf="isPhysicalPreparationSelected(physicalPreparation.id)">
+            <div>
+                <label for="recipient-quantity" class="col-form-label">Cantidad:</label>
+                <input type="number" class="form-control" id="recipient-quantity"
+                    (input)="changeQuantity($event, physicalPreparation.id)">
+            </div>
+            <div>
+                <label for="recipient-quantity_type" class="col-form-label">Tipo de cantidad:</label>
+                <select class="form-select" id="recipient-quantity_type" aria-label="Selecciona el tipo de cantidad"
+                    (input)="changeQuantityType($event, physicalPreparation.id)" formControlName="quantity_type">
+                    <option value="0" selected>No aplica</option>
+                    <option value="1">Segundos</option>
+                    <option value="2">Minutos</option>
+                    <option value="3">Repeticiones</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createPhysicalPreparation" tabindex="-1" aria-labelledby="createPhysicalPreparationLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createPhysicalPreparationLabel">Agregar Preparación Física</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="createPhysicalPreparation" (submit)="createPP()">
+                <div class="modal-body">
+                    <div>
+                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <!-- input name -->
+                        <input type="text" class="form-control" id="recipient-name" formControlName="name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Cerrar</button>
+                    <button type="submit" class="btn btn-primary"
+                        [disabled]="!createPhysicalPreparation.valid">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

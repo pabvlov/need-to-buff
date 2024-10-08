@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { DeleteWarmUp, PostWarmUp, WarmUps, WarmUpsByClass } from '../interfaces/warm-ups';
 import { Observable } from 'rxjs';
-import { ElementsByApparatus, RequestCreateElement, ResponseApparatus, ResponseCreateElement, ResponseElements } from '../interfaces/element';
+import { Apparatus, ApparatusesRequest, Element, RequestCreateElement, ResponseCreateElement } from '../interfaces/element';
 import { CreateClass, SimplePost } from '../interfaces/simple-post';
-import { GetClasses } from '../interfaces/get-classes';
+import { AttachClasses, Clase, GetClasses } from '../interfaces/get-classes';
 import { CreateClassRequest } from '../interfaces/create-class-request';
-
+import { GetPlanifications, PostPlanificationResponse, RequestPostPlanification } from '../interfaces/get-planifications';
+import { PhysicalPreparation } from '../interfaces/physical-preparations';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,15 +17,11 @@ export class PlanificationService {
   constructor(private http: HttpClient) { }
 
   warmUps: WarmUps[] = [];
-  physicalPreparations: WarmUps[] = [];
-  apparatus: ResponseApparatus[] = [];
-  elementsByApparatus: ElementsByApparatus[] = [];
+  physicalPreparations: PhysicalPreparation[] = [];
+  apparatuses: Apparatus[] = [];
   classes: GetClasses[] = [];
   dayClasses: GetClasses[] = [];
-  selectedElements: ElementsByApparatus = {
-    id_apparatus: 0,
-    elements: []
-  };
+  planifications: GetPlanifications[] = [];
 
   fillClasses(id_establishment: number) {
     this.getClasses(id_establishment).subscribe((data: GetClasses[]) => {
@@ -34,8 +31,8 @@ export class PlanificationService {
     });
   }
 
-  fillDayClasses(id_establishment: number, start_date: string, end_date: string) {
-    this.getDayClasses(id_establishment, start_date, end_date).subscribe((data: GetClasses[]) => {
+  fillDayClasses(id_establishment: number) {
+    this.getDayClasses(id_establishment).subscribe((data: GetClasses[]) => {
       if (data != null) {
         this.dayClasses = data;
       } else {
@@ -44,41 +41,18 @@ export class PlanificationService {
     }
     );
   }
-
-  fillApparatusAndElements() {
-    this.getAllApparatus().subscribe((data: ResponseApparatus[]) => {
+  
+  fillElementsByApparatus() {
+    let request: ApparatusesRequest;
+    request = { apparatuses: [] };
+    for (let i = 1; i < 11; i++) {
+      request.apparatuses.push({ id: i });
+    }
+    this.getElementsByApparatus(request).subscribe((data: Apparatus[]) => {
       if (data != null) {
-        this.apparatus = data;
-        this.fillElements();
+        this.apparatuses = data;
       }
     });
-  }
-
-  fillElements() {
-    this.elementsByApparatus = [];
-    this.apparatus.forEach(a => {
-      this.getElementsByApparatus(a.id).subscribe({
-        next: (data: ResponseElements[]) => {
-          if (data != null) {
-            console.log(this.elementsByApparatus.find(el => el.id_apparatus == data[0].apparatus.id) != null);
-            
-              this.elementsByApparatus.push({
-                id_apparatus: data[0].apparatus.id,
-                elements: data
-              });
-          }
-        },
-        error: (error: any) => {
-          
-        }
-      });
-    });    
-  }
-
-  fillSelectedElements(id_apparatus: number) {
-    this.selectedElements = this.elementsByApparatus.find(el => el.id_apparatus == id_apparatus)!;
-    console.log(this.selectedElements);
-    
   }
 
   fillWarmUps() {
@@ -90,12 +64,21 @@ export class PlanificationService {
   }
 
   fillPhysicalPreparations() {
-    this.getPhysicalPreparations().subscribe((data: WarmUps[]) => {
+    this.getPhysicalPreparations().subscribe((data: PhysicalPreparation[]) => {
       if (data != null) {
         this.physicalPreparations = data;
       }
     });
   }
+
+  fillPlanifications(id_establishment: number) {
+    this.getPlanifications(id_establishment).subscribe((data: GetPlanifications[]) => {
+      if (data != null) {
+        this.planifications = data;
+      }
+    });
+  }
+
 
   getWarmUpsByClass(id_class: number): Observable<WarmUpsByClass[]> {
     return this.http.get<WarmUpsByClass[]>(environment.apiUrl + environment.endpoints.warmUpsByClass + `?id_class=${id_class}`);
@@ -110,8 +93,9 @@ export class PlanificationService {
     return this.http.delete<DeleteWarmUp>(environment.apiUrl + environment.endpoints.deleteWarmUp + `?id_warmup=${id}`);
   }
 
-  getElementsByApparatus(apparatus: number) {
-    return this.http.get<ResponseElements[]>(environment.apiUrl + environment.endpoints.getElements + `?id_apparatus=${apparatus}`);
+  getElementsByApparatus(apparatus: ApparatusesRequest) {
+    let body = apparatus;
+    return this.http.post<Apparatus[]>(environment.apiUrl + environment.endpoints.getElements, body);
   }
 
   createElement(req: RequestCreateElement) {
@@ -131,11 +115,11 @@ export class PlanificationService {
   }
 
   getPhysicalPreparations() {
-    return this.http.get<ResponseElements[]>(environment.apiUrl + environment.endpoints.getPhysicalPreparations);
+    return this.http.get<PhysicalPreparation[]>(environment.apiUrl + environment.endpoints.getPhysicalPreparations);
   }
 
   getPhysicalPreparationsByClasses(id_class: number[]) {
-    return this.http.get<ResponseElements[]>(environment.apiUrl + environment.endpoints.getPhysicalPreparationsByClasses + `?id_class=${id_class}`);
+    return this.http.get<PhysicalPreparation[]>(environment.apiUrl + environment.endpoints.getPhysicalPreparationsByClasses + `?id_class=${id_class}`);
   }
 
   attachElement(id_element: number, id_element_connection: number, difficulty: string) {
@@ -146,16 +130,8 @@ export class PlanificationService {
     return this.http.delete<SimplePost>(environment.apiUrl + environment.endpoints.detachElement + `?id_element=${id_element}&id_element_connection=${id_element_connection}`);
   }
 
-  getAllApparatus() {
-    return this.http.get<ResponseApparatus[]>(environment.apiUrl + environment.endpoints.getApparatus);
-  }
-
   getWarmUps(): Observable<WarmUps[]> {
     return this.http.get<WarmUps[]>(environment.apiUrl + environment.endpoints.warmUps);
-  }
-
-  getElements(): Observable<ResponseElements[]> {
-    return this.http.get<ResponseElements[]>(environment.apiUrl + environment.endpoints.getElements);
   }
    
   createClass(classData: CreateClassRequest): Observable<CreateClass> {
@@ -166,11 +142,29 @@ export class PlanificationService {
     return this.http.get<GetClasses[]>(environment.apiUrl + environment.endpoints.showClasses + `?id_establishment=${id_establishment}`);
   }
 
-  getDayClasses(id_establishment: number, start_date: string, end_date: string) {
-    return this.http.get<GetClasses[]>(environment.apiUrl + environment.endpoints.showClassesByDates + `?id_establishment=${id_establishment}&start_date=${start_date}&end_date=${end_date}`);
+  getDayClasses(id_establishment: number) {
+    return this.http.get<GetClasses[]>(environment.apiUrl + environment.endpoints.showTodayClasses + `?id_establishment=${id_establishment}`);
   }
 
+  getPlanifications(id_establishment: number): Observable<GetPlanifications[]> {
+    return this.http.get<GetPlanifications[]>(environment.apiUrl + environment.endpoints.planificationShow + `?id_establishment=${id_establishment}`)
+  }
 
+  createPlanification(requestPostPlanification: RequestPostPlanification) {
+    return this.http.post<PostPlanificationResponse>(environment.apiUrl + environment.endpoints.createPlanification, requestPostPlanification);
+  }
+
+  deletePlanification(id: number): Observable<SimplePost> {
+    return this.http.delete<SimplePost>(environment.apiUrl + environment.endpoints.deletePlanification + `?id_planification=${id}`);
+  }
+
+  attachPlanificationToClasses(id_planification: number, classes: Clase[]) {
+    let body: AttachClasses = {
+      id_planification: id_planification,
+      classes
+    }
+    return this.http.put<SimplePost>(environment.apiUrl + environment.endpoints.attachPlanificationToClasses, body);
+  }
 
 
 

@@ -1,0 +1,68 @@
+<h1>Elementos</h1>
+<h3>Elija los elementos que quieres que logren</h3>
+<br>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createElement">Nuevo Elemento</button>
+<div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let apparatus of apparatuses">
+        <div class="form-check" >
+            <div class="check-element" *ngFor="let e of apparatus.elements">
+                <input class="form-check-input" type="checkbox" [value]="e.id" [id]="e.id" (click)="selectElement(e.id)">
+                <label class="form-check-label" [htmlFor]="e.id">
+                    {{ e.name }}
+                </label>
+            </div>
+          </div>
+    </div>
+</div>
+<br>
+<div class="modal fade" id="createElement" tabindex="-1" aria-labelledby="createElementLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createElementLabel">Agregar Athleta a Grupo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="createElement" (submit)="create()">
+                <div class="modal-body">
+                    <!-- apparatus -->
+                    <div>
+                        <label for="recipient-apparatus" class="col-form-label">Aparato:</label>
+                        <select class="form-select" id="recipient-apparatus" aria-label="Selecciona el aparato" formControlName="id_apparatus">
+                            <option [value]="a.id" *ngFor="let a of apparatuses"> {{ a.name }} / {{ a.gender }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="recipient-name" formControlName="name">
+                    </div>
+                    <div>
+                        <label for="recipient-difficulty" class="col-form-label">Dificultad</label>
+                        <select class="form-select" id="recipient-difficulty" aria-label="Selecciona la dificultad del elemento" formControlName="difficulty">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                            <option value="H">H</option>
+                            <option value="I">I</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="recipient-video" class="col-form-label">Video:</label>
+                        <input type="text" class="form-control" id="recipient-video" formControlName="video">
+                    </div>
+                    <div>
+                        <label for="recipient-image" class="col-form-label">Imagen:</label>
+                        <input type="text" class="form-control" id="recipient-image" formControlName="image">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!createElement.valid">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

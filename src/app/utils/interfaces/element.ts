@@ -12,25 +12,7 @@ export interface ResponseCreateElement {
     affectedRows: number;
 }
 
-
-export interface ResponseElements {
-    id:          number;
-    name:        string;
-    image:       null;
-    difficulty:  string;
-    apparatus:   Apparatus;
-    connections: Apparatus[];
-}
-
-export interface Apparatus {
-    id:          number;
-    name:        string;
-    image:       null;
-    gender?:     string;
-    difficulty?: string;
-}
-
-export interface ResponseApparatus {
+/* export interface ResponseApparatus {
     id:     number;
     name:   string;
     gender: Gender;
@@ -40,9 +22,33 @@ export interface ResponseApparatus {
 export enum Gender {
     F = "F",
     M = "M",
+} */
+
+export interface Apparatus {
+    id:       number;
+    name:     string;
+    image:    null;
+    gender:   Gender;
+    elements: Element[];
 }
 
-export interface ElementsByApparatus {
-    id_apparatus: number;
-    elements:     ResponseElements[];
+export interface Element {
+    id:           number;
+    name:         string;
+    image:        null | string;
+    difficulty:   string;
+    connections?: Element[];
+}
+
+export enum Gender {
+    Femenino = "Femenino",
+    Masculino = "Masculino",
+}
+
+export interface ApparatusesRequest {
+    apparatuses: ApparatusRequest[];
+}
+
+export interface ApparatusRequest {
+    id: number;
 }

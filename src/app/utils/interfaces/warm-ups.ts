@@ -19,3 +19,9 @@ export interface PostWarmUp {
 export interface DeleteWarmUp {
     affectedRows: number;
 }
+
+export interface SelectWarmUp {
+    id: number;
+    quantity: number;
+    quantity_type: number;
+}

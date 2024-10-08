@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row w-100">
+        <div class="col-lg-3 col-md-3 col-sm-12">
+            <h4>Planificaciones</h4>
+            <br><br>
+            <div class="planification" *ngFor="let planification of planifications">
+                <button class="btn-transparent">
+                    <div class="click-class">
+                        <h5 class="card-title">{{ planification.id }}</h5>
+                    </div>
+                </button>
+                <button class="" id="borrar" (click)="delete(planification.id)"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+            <h1>Nueva planificación</h1>
+            <app-select-apparatus  *ngIf="stage == 1"  (stageChanges)="stage" [machineSelected]="apparatusesSelected" (machineSelectedChanges)="apparatusesSelected" [apparatusF]="apparatusF" [apparatusM]="apparatusM"></app-select-apparatus>
+            <app-select-achievements *ngIf="stage == 2"  (stageChanges)="stage" [apparatusesSelected]="apparatusesSelected" [elementsSelected]="selectedElements" (elementsSelectedChanges)="selectedElements"></app-select-achievements>
+            <app-select-warm-ups  *ngIf="stage == 3"  (stageChanges)="stage" [warmUpsSelected]="selectedWarmUps" (warmUpsSelectedChanges)="selectedWarmUps"></app-select-warm-ups>
+            <app-select-physical-preparation  *ngIf="stage == 4"  (stageChanges)="stage" [physicalPreparationsSelected]="selectedPhysicalPreparations" (physicalPreparationsSelectedChanges)="selectedPhysicalPreparations"></app-select-physical-preparation>
+            <app-loading *ngIf="stage == 5"></app-loading> <!-- En este momento se hace la creación de la planificación -->
+            <app-select-classes *ngIf="stage == 6" [classesSelected]="selectedClasses" (classesSelectedChanges)="selectedClasses" [planification]="planification" [classes]="classes" [id_establishment]="id_establishment"></app-select-classes>
+            <button class="btn btn-primary" (click)="back()" *ngIf="stage > 1">Atrás</button>
+            <button class="btn btn-primary" (click)="next()">Siguiente</button>
+        </div>
+    </div>
+</div>

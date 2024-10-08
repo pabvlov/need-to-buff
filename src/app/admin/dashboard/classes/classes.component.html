@@ -1,11 +1,10 @@
 <div class="container">
-    
     <div class="d-flex p-3">
         <h1 class="class-title">Clases</h1>
         <button type="button" data-bs-toggle="modal" data-bs-target="#create" style="display: flex; flex-direction: column; justify-content: center;"><i class="fa-solid fa-plus" style="color: #318aff; font-size: 2rem; padding: 0 20px;"></i></button>
     </div>
    <br>
-   <h2 *ngIf="actualClass.length != 0">{{ actualClass[0].start_date | date: 'dd' }} de {{ actualClass[0].start_date | date: 'MMMM' }} de {{ actualClass[0].start_date | date: 'yyyy' }}</h2>
+   <h2 *ngIf="classes.length != 0">{{ classes[classes.length-1].start_date | date: 'dd' }} de {{ classes[classes.length-1].start_date | date: 'MMMM' }} de {{ classes[classes.length-1].start_date | date: 'yyyy' }}</h2>
     <div class="row">
         <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12">
             Pasadas
@@ -51,7 +50,7 @@
         <div class="col-xl-6 col-lg-6 col-md-4 col-sm-12">
             <div *ngIf="classesFromThisDate.length == 0">No hay próximas clases</div>
             <div class="row" *ngIf="classesFromThisDate.length != 0">
-                <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let class of classesFromThisDate">
+                <div class="col-lg-6 col-md-6 col-sm-12" *ngFor="let class of classesFromThisDate">
                     <button class="btn-transparent">
                         <div class="click-class">
                             <div class="profe">
@@ -64,25 +63,20 @@
                 </div>
             </div>
         </div>
-        
-        
-
     </div>
 </div>
-
 
 <div class="modal fade" id="create" tabindex="-1" aria-labelledby="createLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="createWarmupLabel">Agregar Atleta a Grupo</h1>
+                <h1 class="modal-title fs-5" id="createWarmupLabel">Crear clase</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form [formGroup]="create" (submit)="createClass()">
                 <div class="modal-body">
                     <div>
                         <label for="recipient-group" class="col-form-label">Grupo:</label>
-                        
                         <select class="form-select" id="recipient-group" formControlName="id_group">
                             <option *ngFor="let group of groups" [value]="group.id">{{ group.name }}</option>
                         </select>
@@ -101,6 +95,20 @@
                     <div>
                         <label for="recipient-end_date" class="col-form-label">Fecha de fin:</label>
                         <input type="datetime-local" class="form-control" id="recipient-end_date" formControlName="end_date">
+                    </div>
+                    <div>
+                        <label for="recipient-teacher" class="col-form-label">Periodicidad:</label>
+                        <select class="form-select" id="recipient-teacher" formControlName="id_period">
+                            <option [value]="0">Clase única</option>
+                            <option [value]="1">Todos los días</option>
+                            <option [value]="2">Todas las semanas, el mismo día</option>
+                        </select>
+                    </div>
+                    <div [ngStyle]="!create.value.id_period == null || create.value.id_period! == 0 ? { 'display': 'none' } : { 'display': 'inline-block' }">
+                        <div>
+                            <label for="date_period_end" class="col-form-label">Fecha de fin de período:</label>
+                            <input type="datetime-local" class="form-control" id="date_period_end" formControlName="date_period_end">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

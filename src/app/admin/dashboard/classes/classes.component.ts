@@ -44,15 +44,16 @@ export class ClassesComponent {
   }
 
   get actualClass() {
-      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.start_date) <= new Date() && new Date(dayClass.end_date) >= new Date);
+     /* solo verificar la hora */
+      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.start_date).getTime() <= new Date().getTime() && new Date(dayClass.end_date).getTime() >= new Date().getTime());
   }
 
   get classesFromThisDate() {
-      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.start_date) >= new Date());
+      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.start_date).getTime() >= new Date().getTime());
   }
 
   get classesBackThisDate() {
-      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.end_date) < new Date() && new Date(dayClass.end_date).getUTCDay() == new Date().getUTCDay());
+      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.end_date).getTime() < new Date().getTime());
   }
 
   get teachers() {
@@ -71,7 +72,9 @@ export class ClassesComponent {
     id_group: [, [Validators.required]],
     id_user_teacher: [, [Validators.required]],
     start_date: [, [Validators.required]],
-    end_date: [, [Validators.required]]
+    end_date: [, [Validators.required]],
+    id_period: [, [Validators.required]],
+    date_period_end: [0, [Validators.required]]
   });
 
   createClass() {
@@ -83,15 +86,14 @@ export class ClassesComponent {
         start_date: this.create.value.start_date!,
         end_date: this.create.value.end_date!,
         id_establishment: this.id_establishment,
-        teacher_assistence: false
+        teacher_assistence: false,
+        id_period: this.create.value.id_period!,
+        date_period_end: this.create.value.date_period_end!
       };
       this.planningService.createClass(cc)
       .subscribe((data) => {
         if (data.affectedRows > 0) {
-          let date = new Date();
-          let yesterday = new Date(date.setDate(date.getDate() - 1));
-          let tomorrow = new Date(date.setDate(date.getDate() + 2));
-          this.planningService.fillDayClasses(this.id_establishment, yesterday.toISOString().split('T')[0], tomorrow.toISOString().split('T')[0]);
+          this.planningService.fillDayClasses(this.id_establishment);
           this.swal.success('Listo', 'La clase se creó con éxito, espera a ser redireccionado');
           /* this.router.navigate(['/admin/class/' + data.id_class], { skipLocationChange: true }) */
         }

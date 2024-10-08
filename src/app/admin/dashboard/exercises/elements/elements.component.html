@@ -2,7 +2,6 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createElement">Nuevo Elemento</button>
 
 <div>
-
     <table class="table">
         <thead>
           <tr>
@@ -14,14 +13,14 @@
             <th scope="col"><i class="fa-regular fa-hand-point-right"></i></th>
         </tr>
         </thead>
-        <tbody *ngFor="let element of elementsByApparatus">
-          <tr *ngFor="let e of element.elements | slice:1">
+        <tbody *ngFor="let apparatus of apparatuses">
+          <tr *ngFor="let e of apparatus.elements">
             <th scope="row">{{ e.id }}</th>
-            <td>{{ e.apparatus.name }}</td>
+            <td>{{ apparatus.name }}</td>
             <td>{{ e.name }}</td>
             <td>{{ e.difficulty }}</td>
             <td>
-                <button class="" data-bs-toggle="modal" data-bs-target="#createAttachment" id="agregar"><i class="fa-solid fa-plus" (click)="chooseElement(e.id, e.apparatus.id)"></i></button>
+                <button class="" data-bs-toggle="modal" data-bs-target="#createAttachment" id="agregar"><i class="fa-solid fa-plus" (click)="chooseElement(e.id, apparatus.id)"></i></button>
                 <span class="badge bg-primary" *ngFor="let connection of e.connections">{{ connection.name }}</span>
             </td>
             <td>
@@ -46,7 +45,7 @@
                     <div>
                         <label for="recipient-apparatus" class="col-form-label">Aparato:</label>
                         <select class="form-select" id="recipient-apparatus" aria-label="Selecciona el aparato" formControlName="id_apparatus">
-                            <option [value]="a.id" *ngFor="let a of apparatus"> {{ a.name }} / {{ a.gender }}</option>
+                            <option [value]="a.id" *ngFor="let a of apparatuses"> {{ a.name }} / {{ a.gender }}</option>
                         </select>
                     </div>
                     <div>
@@ -97,7 +96,7 @@
                     <div>
                         <label for="recipient-element_connection" class="col-form-label">Conexión:</label>
                         <select class="form-select" id="recipient-difficulty2" aria-label="Selecciona la dificultad del elemento" formControlName="id_element_connection">
-                            <option [value]="ele.id" *ngFor="let ele of getSelectedElements.elements">{{ ele.name }}</option>
+                            <option [value]="ele.id" *ngFor="let ele of selectedElements">{{ ele.name }}</option>
                         </select>
                     </div>
                     <div>

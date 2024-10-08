@@ -6,4 +6,6 @@ export interface CreateClassRequest {
     end_date: string;
     id_establishment: number;
     teacher_assistence: boolean;
+    id_period: number;
+    date_period_end?: number;
 }

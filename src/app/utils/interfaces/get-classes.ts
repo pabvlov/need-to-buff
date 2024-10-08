@@ -25,10 +25,10 @@ export interface Planning {
     id:                    number;
     elements:              any[];
     warm_ups:              WarmUp[];
-    physical_preparations: PhysicalPreparation[];
+    physical_preparations: PhysicalPreparations[];
 }
 
-export interface PhysicalPreparation {
+export interface PhysicalPreparations {
     physical_preparation: string;
     quantity:             number;
 }
@@ -44,4 +44,13 @@ export interface Teacher {
     name:       string;
     lastname:   string;
     assistence: boolean;
+}
+
+export interface AttachClasses {
+    id_planification: number;
+    classes: Clase[];
+}
+
+export interface Clase {
+    id: number;
 }

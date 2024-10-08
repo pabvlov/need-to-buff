@@ -80,7 +80,6 @@ export class GroupsComponent {
         if (data.affectedRows > 0) {
           this.groupService.fillGroups(this.id_establishment);
           this.swal.success('Listo', 'Grupo creado con éxito');
-          this.planningService.fillApparatusAndElements();
         }
       });
     }

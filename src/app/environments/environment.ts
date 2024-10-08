@@ -37,5 +37,10 @@ export const environment = {
         showClassesByDates: '/class/showBetweenDates',
         makeAdmin: '/user/setRole',
         removeAdmin: '/user/unsetRole',
+        planificationShow: '/planification/show',
+        showTodayClasses: '/class/today',
+        createPlanification: '/planification/build',
+        deletePlanification: '/planification/delete',
+        attachPlanificationToClasses: '/class/attachPlanifications',
     }
 }

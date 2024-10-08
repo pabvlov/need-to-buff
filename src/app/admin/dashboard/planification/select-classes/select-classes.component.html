@@ -1,0 +1,19 @@
+<div class="show-planification-info">
+    <h5>Planificación ID: {{ planification.id }}</h5>
+</div>
+
+<div class="row">
+    <h6>Seleccione las clases que querrá para la planificación</h6>
+    <div class="col-lg-4 col-md-6 col-sm-12"  *ngFor="let class of classes">
+        
+        <button class="btn-transparent" [ngClass]="{'selected': isClassSelected(class.id)}" (click)="selectClass(class.id)">
+            <div class="click-class" [ngClass]="{'selected': isClassSelected(class.id)}">
+                <h5 class="card-title">{{ class.start_date | date: 'HH:mm'}} - {{ class.end_date | date: 'HH:mm'}}</h5>
+                <p class="card-text"><i class="fa-solid fa-people-group"></i> {{ class.group.name }}</p>
+                <div class="profe">
+                    <span class="badge bg-primary">{{ class.teacher.name }} {{ class.teacher.lastname }}</span>
+                </div>
+            </div>
+        </button>
+    </div>
+</div>
