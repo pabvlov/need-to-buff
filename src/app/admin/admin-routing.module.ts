@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ClassComponent } from './class/class.component';
+import { ClassComponent } from './dashboard/classes/class/class.component';
 
 const routes: Routes = [
   { path: 'dashboard/:id_community', component: DashboardComponent },

@@ -12,6 +12,7 @@ import { ClassesComponent } from './classes/classes.component';
 import { PlanificationService } from '../../utils/services/planification.service';
 import { ExercisesComponent } from './exercises/exercises.component';
 import { PlanificationComponent } from './planification/planification.component';
+import { ClassComponent } from './classes/class/class.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +24,8 @@ import { PlanificationComponent } from './planification/planification.component'
     CommonModule,
     RouterModule,
     ExercisesComponent,
-    PlanificationComponent
+    PlanificationComponent,
+    ClassComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -33,9 +35,19 @@ export class DashboardComponent implements OnInit {
   id_establishment: number = 0;
   index: number = 1;
   show: string = 'dashboard';
+  classSelected: number = 0;
   
   ngOnInit(): void {
     
+  }
+
+  onClassSelectedChanges(selectedClass: number) {
+    this.classSelected = selectedClass;
+  }
+
+  // Este método se ejecuta cuando el hijo emite un cambio en "show"
+  onShowChanges(show: string) {
+    this.show = show;
   }
 
   constructor(private communityService: CommunityService, 
@@ -83,6 +95,10 @@ export class DashboardComponent implements OnInit {
     update() {
       this.userService.fillUsersByEstablishment(this.id_establishment);
       this.groupService.fillGroups(this.id_establishment);
+    }
+
+    get selectedClass() {
+      return this.classSelected;
     }
   
 }

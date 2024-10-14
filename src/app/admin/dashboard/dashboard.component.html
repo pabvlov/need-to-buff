@@ -69,12 +69,18 @@
                     [routerLink]="['/admin/dashboard/' + id_community + '/' + e.id]">{{ e.name }} {{ e.id }}</a>
         </div>
 
-        <br><br><br>
+        <br><br><br> {{ selectedClass }} {{ show }}
         
         <app-athletes *ngIf="show == 'athletes'"></app-athletes>
         <app-groups  *ngIf="show == 'groups'"></app-groups>
-        <app-classes *ngIf="show == 'calendar'"></app-classes>
+        <app-classes *ngIf="show == 'calendar'" 
+            (classSelectedChanges)="classSelected" 
+            (showChanges)="show" 
+            [classSelected]="classSelected" 
+            [show]="show">
+        </app-classes>
         <app-exercises *ngIf="show == 'exercises'"></app-exercises>
         <app-planification *ngIf="show == 'planification'" [id_establishment]="id_establishment"></app-planification>
+        <app-class *ngIf="show == 'class'" [idClass]="classSelected"></app-class>
     </div>
 </section>

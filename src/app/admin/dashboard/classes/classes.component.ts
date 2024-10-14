@@ -1,10 +1,10 @@
-import { Component, LOCALE_ID } from '@angular/core';
+import { Component, EventEmitter, Input, LOCALE_ID, Output } from '@angular/core';
 import { PlanificationService } from '../../../utils/services/planification.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SwalService } from '../../../utils/services/swal.service';
 import { CreateClassRequest } from '../../../utils/interfaces/create-class-request';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { GroupService } from '../../../utils/services/group.service';
 import { UserService } from '../../../utils/services/user.service';
 import localeEs from '@angular/common/locales/es';
@@ -16,7 +16,8 @@ registerLocaleData(localeEs);
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
 ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],
   templateUrl: './classes.component.html',
@@ -25,12 +26,16 @@ registerLocaleData(localeEs);
 export class ClassesComponent {
 
   id_establishment: number = 0;
+  
+  @Input() show!: String;
+  @Input() classSelected!: number;
+  @Output() showChanges = new EventEmitter<String>();
+  @Output() classSelectedChanges = new EventEmitter<Number>();
 
   constructor(private planningService: PlanificationService,
               private fb: FormBuilder,
               private swal: SwalService,
               private route: ActivatedRoute,
-              private router: Router,
               private groupsService: GroupService,
               private userService: UserService
   ) {
@@ -39,23 +44,54 @@ export class ClassesComponent {
     });
   }
 
+  selectClass(id: number) {
+
+    this.show = "class";
+    this.classSelected = id;
+
+    this.emitClass();
+    this.emitShow();
+    console.log("ola " + id);
+    
+  }
+
+  emitShow() {
+    this.showChanges.emit(this.show);
+  }
+
+  emitClass() {
+    this.classSelectedChanges.emit(this.classSelected);
+  }
+
   get classes() {
       return this.planningService.dayClasses;
   }
 
-  get actualClass() {
-     /* solo verificar la hora */
-      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.start_date).getTime() <= new Date().getTime() && new Date(dayClass.end_date).getTime() >= new Date().getTime());
+  get actualClass() {     
+      return this.planningService.dayClasses.filter((dayClass) => {
+        const now = new Date(), nowMinutes = now.getHours() * 60 + now.getMinutes();
+        const startMinutes = new Date(dayClass.start_date).getHours() * 60 + new Date(dayClass.start_date).getMinutes();
+        const endMinutes = new Date(dayClass.end_date).getHours() * 60 + new Date(dayClass.end_date).getMinutes();
+        
+        return startMinutes <= nowMinutes && endMinutes >= nowMinutes;
+      });
   }
 
   get classesFromThisDate() {
-      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.start_date).getTime() >= new Date().getTime());
-  }
+    const nowMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+    return this.planningService.dayClasses.filter((dayClass) => {
+        const startMinutes = new Date(dayClass.start_date).getHours() * 60 + new Date(dayClass.start_date).getMinutes();
+        return startMinutes >= nowMinutes;
+    });
+}
 
-  get classesBackThisDate() {
-      return this.planningService.dayClasses.filter((dayClass) => new Date(dayClass.end_date).getTime() < new Date().getTime());
-  }
-
+get classesBackThisDate() {
+    const nowMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+    return this.planningService.dayClasses.filter((dayClass) => {
+        const endMinutes = new Date(dayClass.end_date).getHours() * 60 + new Date(dayClass.end_date).getMinutes();
+        return endMinutes < nowMinutes;
+    });
+}
   get teachers() {
       return this.userService.getUsers.filter((user) => user.roles.length > 0);
   }
