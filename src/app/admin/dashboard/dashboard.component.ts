@@ -35,6 +35,20 @@ export class DashboardComponent implements OnInit {
   show: string = 'dashboard';
   
   ngOnInit(): void {
+    
+  }
+
+  constructor(private communityService: CommunityService, 
+              private route: ActivatedRoute, 
+              private userService: UserService, 
+              private worklineService: WorklineService,
+              private groupService: GroupService,
+              private planificationService: PlanificationService) {
+    this.route.params.subscribe(res => {
+      this.id_community = res['id_community'];
+      this.id_establishment = res['id_establishment'];
+    });
+
     this.route.params.subscribe(res => {
       this.id_community = res['id_community'];
       this.id_establishment = res['id_establishment'];
@@ -51,18 +65,6 @@ export class DashboardComponent implements OnInit {
         this.groupService.fillDifficulties();
         this.userService.fillUsersByEstablishment(this.id_establishment);
       }
-    });
-  }
-
-  constructor(private communityService: CommunityService, 
-              private route: ActivatedRoute, 
-              private userService: UserService, 
-              private worklineService: WorklineService,
-              private groupService: GroupService,
-              private planificationService: PlanificationService) {
-    this.route.params.subscribe(res => {
-      this.id_community = res['id_community'];
-      this.id_establishment = res['id_establishment'];
     });
    }
 

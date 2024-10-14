@@ -36,6 +36,7 @@ export class PhysicalPreparationComponent {
   get physicalpreparations() {
     return this.planningService.physicalPreparations;
   }
+  
   create() {
     if (this.createPhysicalPreparation.valid) {
       this.planningService.createPhysicalPreparation(this.createPhysicalPreparation.value.name!)
