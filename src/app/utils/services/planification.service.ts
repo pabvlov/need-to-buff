@@ -9,6 +9,7 @@ import { AttachClasses, Clase, GetClasses } from '../interfaces/get-classes';
 import { CreateClassRequest } from '../interfaces/create-class-request';
 import { GetPlanifications, PostPlanificationResponse, RequestPostPlanification } from '../interfaces/get-planifications';
 import { PhysicalPreparation } from '../interfaces/physical-preparations';
+import { PostPresence } from '../interfaces/post-presence';
 @Injectable({
   providedIn: 'root'
 })
@@ -166,11 +167,13 @@ export class PlanificationService {
     return this.http.put<SimplePost>(environment.apiUrl + environment.endpoints.attachPlanificationToClasses, body);
   }
 
-
-
-
-
-
-
-
+  checkPresence(id_class: number, athletes: number[]) {
+    let body: PostPresence = {
+      id_class,
+      athlete_ids: athletes.map((athlete) => {
+        return { id: athlete }
+      })
+    }
+    return this.http.post<SimplePost>(environment.apiUrl + environment.endpoints.checkPresence, body);
+  }
 }

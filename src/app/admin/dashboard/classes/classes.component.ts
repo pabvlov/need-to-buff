@@ -27,10 +27,10 @@ export class ClassesComponent {
 
   id_establishment: number = 0;
   
-  @Input() show!: String;
+  @Input() show!: string;
   @Input() classSelected!: number;
-  @Output() showChanges = new EventEmitter<String>();
-  @Output() classSelectedChanges = new EventEmitter<Number>();
+  @Output() showChanges = new EventEmitter<string>();
+  @Output() classSelectedChanges = new EventEmitter<number>();
 
   constructor(private planningService: PlanificationService,
               private fb: FormBuilder,
@@ -44,23 +44,23 @@ export class ClassesComponent {
     });
   }
 
-  selectClass(id: number) {
-
-    this.show = "class";
-    this.classSelected = id;
-
-    this.emitClass();
-    this.emitShow();
-    console.log("ola " + id);
-    
-  }
-
-  emitShow() {
+  // Método para emitir cambios en "show"
+  changeShow(newShow: string) {
+    this.show = newShow;
     this.showChanges.emit(this.show);
   }
 
-  emitClass() {
+  // Método para emitir cambios en "classSelected"
+  changeClassSelected(newClassSelected: number) {
+    this.classSelected = newClassSelected;
     this.classSelectedChanges.emit(this.classSelected);
+    console.log(this.classSelected);
+    
+  }
+
+  change(id: number) {
+    this.changeClassSelected(id); 
+    this.changeShow("class");
   }
 
   get classes() {

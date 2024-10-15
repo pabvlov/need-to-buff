@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
   id_establishment: number = 0;
   index: number = 1;
   show: string = 'dashboard';
-  classSelected: number = 0;
+  classSelected: number = 1;
   
   ngOnInit(): void {
     

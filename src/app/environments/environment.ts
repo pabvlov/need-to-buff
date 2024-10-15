@@ -42,5 +42,6 @@ export const environment = {
         createPlanification: '/planification/build',
         deletePlanification: '/planification/delete',
         attachPlanificationToClasses: '/class/attachPlanifications',
+        checkPresence: '/class/presence',
     }
 }

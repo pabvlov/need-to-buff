@@ -1,0 +1,24 @@
+.badge {
+    background-color: var(--primary-color) !important;
+}
+
+.form-check-input {
+    /* haz un buen checkbox bonito con :hover */
+    cursor: pointer;
+
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.form-check-input:checked:hover {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.form-check-input:hover {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}

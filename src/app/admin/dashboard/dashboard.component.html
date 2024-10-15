@@ -5,37 +5,43 @@
         </a>
         <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
             <li class="nav-item">
-                <a class="nav-link py-3 border-bottom text-center" aria-current="page" title="" [ngClass]="{active: show == 'dashboard'}" (click)="show = 'dashboard';"
-                    data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                <a class="nav-link py-3 border-bottom text-center" aria-current="page" title=""
+                    [ngClass]="{active: show == 'dashboard'}" (click)="show = 'dashboard';" data-bs-toggle="tooltip"
+                    data-bs-placement="right" data-bs-original-title="Home">
                     <i class="fa-solid fa-gauge-high"></i>
                 </a>
             </li>
             <li>
-                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" id="establishmentAthletes" [ngClass]="{active: show == 'athletes'}" (click)="show = 'athletes';"
-                    data-bs-placement="right" data-bs-original-title="Dashboard">
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" id="establishmentAthletes"
+                    [ngClass]="{active: show == 'athletes'}" (click)="show = 'athletes';" data-bs-placement="right"
+                    data-bs-original-title="Dashboard">
                     <i class="fa-solid fa-person-running"></i>
                 </a>
             </li>
             <li>
-                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" [ngClass]="{active: show == 'exercises'}" (click)="show = 'exercises'"
-                    data-bs-placement="right" data-bs-original-title="Exercises">
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
+                    [ngClass]="{active: show == 'exercises'}" (click)="show = 'exercises'" data-bs-placement="right"
+                    data-bs-original-title="Exercises">
                     <i class="fa-solid fa-dumbbell"></i>
                 </a>
             </li>
             <li>
-                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" [ngClass]="{active: show == 'calendar'}" (click)="show = 'calendar'"
-                    data-bs-placement="right" data-bs-original-title="Calendar">
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
+                    [ngClass]="{active: show == 'calendar'}" (click)="show = 'calendar'" data-bs-placement="right"
+                    data-bs-original-title="Calendar">
                     <i class="fa-solid fa-calendar-days"></i>
                 </a>
             </li>
             <li>
-                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" [ngClass]="{active: show == 'groups'}" (click)="show = 'groups'"
-                    data-bs-placement="right" data-bs-original-title="Groups">
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
+                    [ngClass]="{active: show == 'groups'}" (click)="show = 'groups'" data-bs-placement="right"
+                    data-bs-original-title="Groups">
                     <i class="fa-solid fa-people-group"></i>
                 </a>
             </li>
             <li>
-                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" [ngClass]="{active: show == 'planification'}" (click)="show = 'planification'"
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
+                    [ngClass]="{active: show == 'planification'}" (click)="show = 'planification'"
                     data-bs-placement="right" data-bs-original-title="Groups">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
@@ -59,25 +65,18 @@
         </div>
     </div>
 
-    <div class="container-fluid content">
-            <div class="btn-group d-flex justify-content-center">
-            <a class="btn btn-outline-primary"
-                    [ngClass]="id_establishment == e.id ? 'active' : ''" 
-                    aria-current="page" 
-                    *ngFor="let e of establishments; index as i;"
-                    (click)="index = i; id_establishment = e.id; update();"
-                    [routerLink]="['/admin/dashboard/' + id_community + '/' + e.id]">{{ e.name }} {{ e.id }}</a>
+    <div class="container-fluid content vh-100">
+        <div class="btn-group d-flex justify-content-center">
+            <a class="btn btn-outline-primary" [ngClass]="id_establishment == e.id ? 'active' : ''" aria-current="page"
+                *ngFor="let e of establishments; index as i;" (click)="index = i; id_establishment = e.id; update();"
+                [routerLink]="['/admin/dashboard/' + id_community + '/' + e.id]">{{ e.name }} {{ e.id }}</a>
         </div>
 
-        <br><br><br> {{ selectedClass }} {{ show }}
-        
+        <br><br><br>
+
         <app-athletes *ngIf="show == 'athletes'"></app-athletes>
-        <app-groups  *ngIf="show == 'groups'"></app-groups>
-        <app-classes *ngIf="show == 'calendar'" 
-            (classSelectedChanges)="classSelected" 
-            (showChanges)="show" 
-            [classSelected]="classSelected" 
-            [show]="show">
+        <app-groups *ngIf="show == 'groups'"></app-groups>
+        <app-classes *ngIf="show == 'calendar'" [classSelected]="classSelected" [show]="show" (classSelectedChanges)="onClassSelectedChanges($event)" (showChanges)="onShowChanges($event)">
         </app-classes>
         <app-exercises *ngIf="show == 'exercises'"></app-exercises>
         <app-planification *ngIf="show == 'planification'" [id_establishment]="id_establishment"></app-planification>

@@ -1,1 +1,125 @@
-{{ class | json }}
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <h1>Planificación</h1>
+
+        <h3>Calentamiento</h3>
+
+        <ul class="list-group" *ngIf="class?.planning != null">
+            <li class="list-group-item d-flex justify-content-between align-items-center"
+                *ngFor="let wu of class?.planning?.warm_ups">
+                {{ wu.warm_up }}
+                <span class="badge badge-primary badge-pill" *ngIf="wu.quantity != null">{{ wu.quantity }} {{
+                    wu.quantity_type }}</span>
+            </li>
+        </ul>
+
+        <hr>
+
+        <h3>Preparación Física</h3>
+
+        <ul class="list-group" *ngIf="class?.planning != null">
+            <li class="list-group-item d-flex justify-content-between align-items-center"
+                *ngFor="let pp of class?.planning?.physical_preparations">
+                {{ pp.physical_preparation }}
+                <span class="badge badge-primary badge-pill" *ngIf="pp.quantity != null">{{ pp.quantity }} {{
+                    pp.quantity_type }}</span>
+            </li>
+        </ul>
+
+        <hr>
+
+        <h3>Elementos</h3>
+
+        <ul class="list-group" *ngFor="let a of class?.planning?.apparatuses">
+            {{ a.name }}
+            <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let e of a.elements">
+                {{ e.name }}
+                <span class="badge badge-primary badge-pill" *ngIf="e.difficulty != null">{{ e.difficulty }}</span>
+            </li>
+        </ul>
+
+
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="d-flex">
+            <h1 class="mx-3">Clase</h1>
+            <button class="btn btn-primary mx-3" data-bs-toggle="modal" data-bs-target="#checkAthletes" *ngIf="!areAthletesChecked()">Pasar Lista</button>
+        </div>
+        
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Hora Inicio</th>
+                    <th scope="col">Hora Fin</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">{{ class?.start_date | date }}</th>
+                    <td>{{ class?.start_date | date: 'shortTime' }}</td>
+                    <td>{{ class?.end_date | date: 'shortTime' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Profesor</th>
+                    <th scope="col">Asistencia</th>
+                    <th scope="col">Fecha Asistencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">{{ class?.teacher?.name }} {{ class?.teacher?.lastname }}</th>
+                    <td>{{ class?.teacher?.assistence }}</td>
+                    <td>{{ class?.start_date | date }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table" *ngIf="class?.presences != null">
+            <thead>
+                <tr>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Presentes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let presence of class?.presences">
+                    <th scope="row">{{ presence.date | date }}</th>
+                    <td>
+                        <ul>
+                            <li *ngFor="let athlete of presence.athletes">{{ athlete.athlete }}</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="checkAthletes" tabindex="-1" aria-labelledby="checkAthletesLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="checkAthletesLabel">Selecciona los presentes</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="form-check p-5" *ngIf="class?.group != null">
+                <h3>{{ class?.group?.name }}</h3>
+                <div class="check-element" *ngFor="let athlete of class?.group?.athletes">
+                    <input class="form-check-input" type="checkbox" [value]="athlete.athlete_id" [id]="athlete.athlete_id" (click)="checkAthlete(athlete.athlete_id)">
+                    <label class="form-check-label" [htmlFor]="athlete.athlete_id">
+                        {{ athlete.athlete }}
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="save()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

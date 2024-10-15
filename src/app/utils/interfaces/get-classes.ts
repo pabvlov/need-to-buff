@@ -4,18 +4,19 @@ export interface GetClasses {
     start_date:       Date;
     end_date:         Date;
     teacher:          Teacher;
-    planning:         Planning | null;
+    planning:         Planning;
     group:            Group;
+    presences:        Presence[];
 }
 
 export interface Group {
     id:         number;
     name:       string;
     difficulty: string;
-    athletes:   AthleteElement[];
+    athletes:   GroupAthlete[];
 }
 
-export interface AthleteElement {
+export interface GroupAthlete {
     athlete_id:    number;
     athlete:       string;
     athlete_image: null;
@@ -23,20 +24,46 @@ export interface AthleteElement {
 
 export interface Planning {
     id:                    number;
-    elements:              any[];
+    apparatuses:           Apparatus[];
     warm_ups:              WarmUp[];
-    physical_preparations: PhysicalPreparations[];
+    physical_preparations: PhysicalPreparation[];
 }
 
-export interface PhysicalPreparations {
+export interface Apparatus {
+    id:       number;
+    name:     string;
+    image:    null;
+    elements: Element[];
+}
+
+export interface Element {
+    id:         number;
+    name:       string;
+    video:      null | string;
+    image:      null | string;
+    difficulty: string;
+}
+
+export interface PhysicalPreparation {
     physical_preparation: string;
-    quantity:             number;
+    quantity:             null;
+    quantity_type:        null;
 }
 
 export interface WarmUp {
     warm_up:       string;
-    quantity:      number;
-    quantity_type: string;
+    quantity:      null;
+    quantity_type: null;
+}
+
+export interface Presence {
+    date:     Date;
+    athletes: PresenceAthlete[];
+}
+
+export interface PresenceAthlete {
+    id_athlete: number;
+    athlete:    string;
 }
 
 export interface Teacher {
@@ -45,6 +72,7 @@ export interface Teacher {
     lastname:   string;
     assistence: boolean;
 }
+
 
 export interface AttachClasses {
     id_planification: number;

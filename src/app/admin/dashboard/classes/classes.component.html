@@ -1,7 +1,6 @@
 <div class="container">
     <div class="d-flex p-3">
         <h1 class="class-title">Clases</h1>
-        {{ show }} {{ classSelected }}
         <button type="button" data-bs-toggle="modal" data-bs-target="#create" style="display: flex; flex-direction: column; justify-content: center;"><i class="fa-solid fa-plus" style="color: #318aff; font-size: 2rem; padding: 0 20px;"></i></button>
     </div>
    <br>
@@ -20,7 +19,7 @@
             <div *ngIf="classesBackThisDate.length == 0">No ha habido clases</div>
             <div class="row" *ngIf="classesBackThisDate.length != 0">
                 <div class="col-12" *ngFor="let backClass of classesBackThisDate">
-                    <button class="btn-transparent" (click)="selectClass(backClass.id)">
+                    <button class="btn-transparent" (click)="change(backClass.id)">
                         <div class="click-class">
                             <div class="profe">
                                     <span class="badge bg-primary">{{ backClass.teacher.name }} {{ backClass.teacher.lastname }}</span>
@@ -36,7 +35,7 @@
             <div *ngIf="actualClass.length == 0">No hay clase actual</div>
             <div class="row" *ngIf="actualClass.length != 0">
                 <div class="col-12" *ngFor="let class of actualClass">
-                    <button class="btn-transparent" (click)="selectClass(class.id)">
+                    <button class="btn-transparent" (click)="change(class.id)">
                         <div class="click-class">
                             <div class="profe">
                                 <span class="badge bg-primary">{{ class.teacher.name }} {{ class.teacher.lastname }}</span>
@@ -52,7 +51,7 @@
             <div *ngIf="classesFromThisDate.length == 0">No hay próximas clases</div>
             <div class="row" *ngIf="classesFromThisDate.length != 0">
                 <div class="col-lg-6 col-md-6 col-sm-12" *ngFor="let class of classesFromThisDate">
-                    <button class="btn-transparent" (click)="selectClass(class.id)">
+                    <button class="btn-transparent" (click)="change(class.id)">
                         <div class="click-class">
                             <div class="profe">
                                 <span class="badge bg-primary">{{ class.teacher.name }} {{ class.teacher.lastname }}</span>
