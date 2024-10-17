@@ -18,7 +18,7 @@
       <tr *ngFor="let group of groups">
         <th scope="row">{{ group.id }}</th>
         <td>{{ group.name }}</td>
-        <td>{{ group.difficulty_category }}</td>
+        <td>{{ group.difficulty }}</td>
         <td>
             <span class="badge bg-primary" *ngFor="let athlete of group.athletes">{{ athlete.name }}</span>
         </td>

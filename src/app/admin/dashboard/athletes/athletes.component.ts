@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../utils/services/user.service';
-import { AthleteUser, User } from '../../../utils/interfaces/find-users-response';
+import { AthleteUser, FindUsersResponse, User } from '../../../utils/interfaces/find-users-response';
 import { CommonModule } from '@angular/common';
 import { Worklines } from '../../../utils/interfaces/worklines';
 import { WorklineService } from '../../../utils/services/workline.service';
@@ -26,6 +26,7 @@ import { SimplePost } from '../../../utils/interfaces/simple-post';
 export class AthletesComponent {
   @ViewChild('cerrar') cc: any;
   id: number = 0;
+  id_community: number = 0;
 
   constructor(private route: ActivatedRoute, 
               private userService: UserService, 
@@ -37,15 +38,25 @@ export class AthletesComponent {
   ngOnInit(): void {
     this.route.params.subscribe(res => {
       this.id = res['id_establishment'];
+      this.id_community = res['id_community'];
     });
   }
 
-  get getUsers(): User[] {
+  get getUsers(): FindUsersResponse {
     return this.userService.getUsers;
   }
 
+  userHasRole(user: User): boolean {
+    /* check if user is who has roles is part of the establishment */
+    return user.roles.filter(r => r.id_establishment == this.id).flatMap(r => r.role).length > 0;
+  }
+
+  get userByEstablishment(): User[] {
+    return this.getUsers.establishments.filter(e => e.id_establishment == this.id).flatMap(establishment => establishment.user)
+  }
+
   get athletes(): AthleteUser[] {
-    return this.userService.athletes
+    return this.userService.athletes.filter(a => a.id_establishment == this.id);
   }
 
   get worklines(): Worklines[] {
@@ -81,7 +92,7 @@ export class AthletesComponent {
           'Client registered successfully',
           'El usuario ahora es tu cliente y aparecerá en tu dashboard'
         );
-        this.userService.fillUsersByEstablishment(this.id);
+        this.userService.fillUsersByCommunity(this.id_community);
       } else {
         this.swal.error('Error', data.message!);
       }
@@ -104,7 +115,7 @@ export class AthletesComponent {
           'Athlete created successfully',
           'El usuario ahora es tu cliente y aparecerá en tu dashboard'
         );
-        this.userService.fillUsersByEstablishment(this.id);
+        this.userService.fillUsersByCommunity(this.id_community);
       } else {
         this.swal.error('Error', data.message!);
       }
@@ -121,7 +132,7 @@ export class AthletesComponent {
           'Admin created successfully',
           'El usuario ahora es administrador de ' + this.establishments.find(e => e.id == this.id)?.name
         );
-        this.userService.fillUsersByEstablishment(this.id);
+        this.userService.fillUsersByCommunity(this.id_community);
       } else {
         this.swal.error('Error', data.message!);
       }
@@ -136,7 +147,7 @@ export class AthletesComponent {
           'Admin removed successfully',
           'El usuario ya no es administrador de ' + this.establishments.find(e => e.id == this.id)?.name
         );
-        this.userService.fillUsersByEstablishment(this.id);
+        this.userService.fillUsersByCommunity(this.id_community);
       } else {
         this.swal.error('Error', data.message!);
         

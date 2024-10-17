@@ -35,7 +35,7 @@ export class GroupsComponent {
    }
 
   get groups() {
-    return this.groupService.groups;
+    return this.groupService.groups.find(g => g.id_establishment == this.id_establishment)?.groups;
   }
 
   get athletes(): AthleteUser[] {

@@ -20,6 +20,10 @@ export class SelectClassesComponent {
   @Input() id_establishment!: number;
   @Input() planification!: Planification;
   @Input() classes: GetClasses[] = [];
+
+  get classesByEstablishment() {
+    return this.classes.flatMap(establishment => establishment.classes);
+  }
   
   emitClassesSelected() {
     this.classesSelectedChanges.emit(this.classesSelected);

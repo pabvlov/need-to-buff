@@ -12,9 +12,9 @@
                     </div>
                 </button>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-12 pb-2" *ngFor="let user of getUsers">
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-2" *ngFor="let user of userByEstablishment">
                 <button class="card w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                    [ngClass]="{'admin': user.roles.length > 0}">
+                    [ngClass]="{'admin': userHasRole(user)}">
                     <div class="nombre-usuario text-center pt-2 w-100">
                         <h6>{{ user.name }} {{ user.lastname }}</h6>
                     </div>
@@ -25,9 +25,9 @@
                     </div>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                    <li *ngIf="user.roles.length > 0"><button class="dropdown-item"
+                    <li *ngIf="userHasRole(user)"><button class="dropdown-item"
                             (click)="removeAdmin(user.mail)">Quitar admin.</button></li>
-                    <li *ngIf="user.roles.length == 0"><button class="dropdown-item"
+                    <li *ngIf="!userHasRole(user)"><button class="dropdown-item"
                             (click)="makeAdmin(user.mail)">Hacer admin.</button></li>
                     <li><a class="dropdown-item" href="#">Borrar</a></li>
                     <li>
@@ -120,7 +120,7 @@
                         <select class="form-select" id="recipient-user"
                             aria-label="Selecciona el usuario que será el apoderado"
                             formControlName="id_user_in_charge">
-                            <option [value]="user.id" *ngFor="let user of getUsers; index as i" [selected]="i === 0"> {{
+                            <option [value]="user.id" *ngFor="let user of userByEstablishment; index as i" [selected]="i === 0"> {{
                                 user.name }} {{ user.lastname }}</option>
                         </select>
                     </div>

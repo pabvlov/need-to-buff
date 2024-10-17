@@ -1,4 +1,4 @@
-<section id="dashboard">
+<section id="dashboard" *ngIf="isDataLoaded">
     <div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem; height: 100vh; position: static;">
         <a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip">
             <img src="../../../assets/images/need_to_buff.png" alt="" class="img-fluid">
@@ -66,13 +66,23 @@
     </div>
 
     <div class="container-fluid content vh-100">
-        <div class="btn-group d-flex justify-content-center">
-            <a class="btn btn-outline-primary" [ngClass]="id_establishment == e.id ? 'active' : ''" aria-current="page"
-                *ngFor="let e of establishments; index as i;" (click)="index = i; id_establishment = e.id; update();"
-                [routerLink]="['/admin/dashboard/' + id_community + '/' + e.id]">{{ e.name }} {{ e.id }}</a>
-        </div>
 
-        <br><br><br>
+        <div class="center my-3">
+            <mat-form-field>
+                <mat-label>Selecciona tu sede</mat-label>
+                <mat-select>
+                    <mat-option   value="{{ e.id }}" 
+                                *ngFor="let e of establishments; index as i;" 
+                                (click)="index = i; id_establishment = e.id;" 
+                                [disabled]="id_establishment == e.id"
+                                [routerLink]="['/admin/dashboard/' + id_community + '/' + e.id]"
+                                >
+                                {{ e.name }} {{ e.id }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <br>
 
         <app-athletes *ngIf="show == 'athletes'"></app-athletes>
         <app-groups *ngIf="show == 'groups'"></app-groups>
@@ -83,3 +93,5 @@
         <app-class *ngIf="show == 'class'" [idClass]="classSelected"></app-class>
     </div>
 </section>
+
+<app-screen-loading *ngIf="!isDataLoaded"></app-screen-loading>

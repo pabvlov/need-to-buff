@@ -7,7 +7,6 @@ import { Community, UserCommunities } from '../interfaces/user-communities';
 import { AthleteUser, FindUsersResponse, User } from '../interfaces/find-users-response';
 import { ResponseAthlete } from '../interfaces/post-athlete';
 import { CreateAthlete } from '../interfaces/create-athlete';
-import { Group } from '../interfaces/group';
 import { SimplePost } from '../interfaces/simple-post';
 
 @Injectable({
@@ -44,27 +43,33 @@ export class UserService {
 
   }
 
-  getUserByEstablishmentId(establishmentId: number): Observable<FindUsersResponse> {
-    return this.httpClient.get<FindUsersResponse>(environment.apiUrl + environment.endpoints.findUsers + `?id_establishment=${establishmentId}`)
+  getUserByEstablishmentId(id_community: number): Observable<FindUsersResponse> {
+    return this.httpClient.get<FindUsersResponse>(environment.apiUrl + environment.endpoints.findUsers + `?id_community=${id_community}`)
   }
 
 
-  fillUsersByEstablishment(id_establishment: number) {
-    this.getUserByEstablishmentId(id_establishment).subscribe((data: FindUsersResponse) => {
+  fillUsersByCommunity(id_community: number) {
+    this.getUserByEstablishmentId(id_community).subscribe((data: FindUsersResponse) => {
       if (data != null) {
         this.usersResponse = data;
         this.athletes = [];
-        data.users.forEach(user => {
-          user.athletes.forEach(athlete => {
-            this.athletes.push({
-              id: athlete.id,
-              name: athlete.name,
-              lastname: athlete.lastname,
-              birthdate: athlete.birthdate,
-              image: athlete.image,
-              work_line: athlete.work_line,
-              user: user
-            });
+        /* fill athletes by establishment no repeat */
+        this.usersResponse.establishments.forEach(establishment => {
+          establishment.user.forEach(user => {
+            if (user.athletes.length > 0) {
+              user.athletes.forEach(athlete => {
+                this.athletes.push({
+                  id: athlete.id,
+                  name: athlete.name,
+                  lastname: athlete.lastname,
+                  birthdate: athlete.birthdate,
+                  image: athlete.image,
+                  work_line: athlete.work_line,
+                  id_establishment: establishment.id_establishment,
+                  user
+                });
+              });
+            }
           });
         });
       }
@@ -72,13 +77,13 @@ export class UserService {
   }
 
   usersResponse: FindUsersResponse = {
-    users: []
+    establishments: []
   }
 
   athletes: AthleteUser[] = [];
 
-  get getUsers(): User[] {
-    return this.usersResponse.users;
+  get getUsers(): FindUsersResponse {
+    return this.usersResponse
   }
 
   createClient(mail: string, id_establishment: number): Observable<ResponseAthlete> {

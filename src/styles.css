@@ -1,3 +1,5 @@
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
 :root {
     --primary-color: #03BB85;
     --secondary-color: #1900ff;

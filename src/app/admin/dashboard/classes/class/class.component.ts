@@ -20,7 +20,7 @@ export class ClassComponent {
   constructor(private planificationService: PlanificationService, private swal: SwalService) {}
 
   get class() {
-    return this.planificationService.dayClasses.find(c => c.id == this.idClass)
+    return this.planificationService.dayClasses.flatMap(establishment => establishment.classes).find(c => c.id == this.idClass)
   }
 
   checkAthlete(id: number) {

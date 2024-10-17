@@ -1,4 +1,9 @@
 export interface GetClasses {
+    id_establishment: number;
+    classes:          Class[];
+}
+
+export interface Class {
     id:               number;
     id_establishment: number;
     start_date:       Date;
@@ -46,14 +51,14 @@ export interface Element {
 
 export interface PhysicalPreparation {
     physical_preparation: string;
-    quantity:             null;
+    quantity:             number | null;
     quantity_type:        null;
 }
 
 export interface WarmUp {
     warm_up:       string;
-    quantity:      null;
-    quantity_type: null;
+    quantity:      number | null;
+    quantity_type: null | string;
 }
 
 export interface Presence {

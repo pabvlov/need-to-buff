@@ -4,7 +4,7 @@ import { SimplePost } from '../interfaces/simple-post';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ResponseAthlete } from '../interfaces/post-athlete';
-import { Group } from '../interfaces/group';
+import { Group, GroupsResponse } from '../interfaces/group';
 import { Difficulty } from '../interfaces/difficulty';
 
 @Injectable({
@@ -14,19 +14,19 @@ export class GroupService {
 
   constructor(private httpClient: HttpClient) { }
 
-  groups: Group[] = []
+  groups: GroupsResponse[] = []
   difficulties: Difficulty[] = []
   
-  fillGroups(id_establishment: number): void {
-    this.getGroupsByEstablishmentId(id_establishment).subscribe((data: Group[]) => {
+  fillGroups(id_community: number): void {
+    this.getGroupsByEstablishmentId(id_community).subscribe((data: GroupsResponse[]) => {
       if (data != null) {
         this.groups = data;
       }
     })
   }
   
-  getGroupsByEstablishmentId(establishmentId: number): Observable<Group[]> {
-    return this.httpClient.get<Group[]>(environment.apiUrl + environment.endpoints.findGroups + `?id_establishment=${establishmentId}`)
+  getGroupsByEstablishmentId(id_community: number): Observable<GroupsResponse[]> {
+    return this.httpClient.get<GroupsResponse[]>(environment.apiUrl + environment.endpoints.findGroups + `?id_community=${id_community}`)
   }
   
   addAthleteToGroup(id_group: number, id_athlete: number): Observable<SimplePost> {

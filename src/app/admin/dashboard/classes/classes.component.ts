@@ -64,11 +64,12 @@ export class ClassesComponent {
   }
 
   get classes() {
-      return this.planningService.dayClasses;
+      return this.planningService.dayClasses.flatMap(establishment => establishment.classes).filter(e => e.id_establishment == this.id_establishment);
   }
 
   get actualClass() {     
-      return this.planningService.dayClasses.filter((dayClass) => {
+      return this.classes
+      .filter((dayClass) => {
         const now = new Date(), nowMinutes = now.getHours() * 60 + now.getMinutes();
         const startMinutes = new Date(dayClass.start_date).getHours() * 60 + new Date(dayClass.start_date).getMinutes();
         const endMinutes = new Date(dayClass.end_date).getHours() * 60 + new Date(dayClass.end_date).getMinutes();
@@ -79,25 +80,28 @@ export class ClassesComponent {
 
   get classesFromThisDate() {
     const nowMinutes = new Date().getHours() * 60 + new Date().getMinutes();
-    return this.planningService.dayClasses.filter((dayClass) => {
+    return this.classes
+    .filter((dayClass) => {
         const startMinutes = new Date(dayClass.start_date).getHours() * 60 + new Date(dayClass.start_date).getMinutes();
         return startMinutes >= nowMinutes;
     });
 }
 
 get classesBackThisDate() {
-    const nowMinutes = new Date().getHours() * 60 + new Date().getMinutes();
-    return this.planningService.dayClasses.filter((dayClass) => {
-        const endMinutes = new Date(dayClass.end_date).getHours() * 60 + new Date(dayClass.end_date).getMinutes();
-        return endMinutes < nowMinutes;
-    });
+  const nowMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+
+  return this.classes // Descomponemos las clases de cada establecimiento
+      .filter((dayClass) => {
+          const endMinutes = new Date(dayClass.end_date).getHours() * 60 + new Date(dayClass.end_date).getMinutes();
+          return endMinutes < nowMinutes;
+      });
 }
   get teachers() {
-      return this.userService.getUsers.filter((user) => user.roles.length > 0);
+      return this.userService.getUsers.establishments.filter(establishment => establishment.id_establishment == this.id_establishment).flatMap(establishment => establishment.user).filter(user => user.roles.length > 0);
   }
 
   get groups() {
-      return this.groupsService.groups;
+      return this.groupsService.groups.find(group => group.id_establishment == this.id_establishment)?.groups;
   }
 
   get date() {

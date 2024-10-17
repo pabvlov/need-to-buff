@@ -1,13 +1,15 @@
-<section class="info">
+<section class="info" *ngIf="isLandingInfoLoaded">
     <div class="simple-navbar">
         <button class="btn btn-light volver"><i class="fa-solid fa-arrow-left" (click)="volver()"></i></button>
         <h1 class="gym-acronym">{{ community.acronym }}</h1>
     </div>
     <div class="admin">
-        <a [routerLink]="['/admin/dashboard/' + communityId + '/' + establishments[0].id]" routerLinkActive="router-link-active" class="btn btn-danger">Administrar</a>
+        <a [routerLink]="['/admin/dashboard/' + communityId + '/' + establishments[0].id]"
+         routerLinkActive="router-link-active" 
+         class="btn btn-danger" (click)="load()">Administrar</a>
     </div>
 </section>
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="isLandingInfoLoaded">
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8 col-xl-8">
             <section class="banners">
@@ -91,3 +93,5 @@
         </div>
     </div>
 </div>
+
+<app-screen-loading *ngIf="!isLandingInfoLoaded"></app-screen-loading>

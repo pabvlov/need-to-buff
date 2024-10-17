@@ -13,6 +13,9 @@ import { PlanificationService } from '../../utils/services/planification.service
 import { ExercisesComponent } from './exercises/exercises.component';
 import { PlanificationComponent } from './planification/planification.component';
 import { ClassComponent } from './classes/class/class.component';
+import {MatFormField, MatSelectModule} from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ScreenLoadingComponent } from '../../common/screen-loading/screen-loading.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,7 +28,10 @@ import { ClassComponent } from './classes/class/class.component';
     RouterModule,
     ExercisesComponent,
     PlanificationComponent,
-    ClassComponent
+    ClassComponent,
+    MatSelectModule,
+    MatFormFieldModule,
+    ScreenLoadingComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -66,16 +72,15 @@ export class DashboardComponent implements OnInit {
       this.id_establishment = res['id_establishment'];
       if(this.communityService.establishments.length === 0) {
         this.communityService.setGymLandingInfo(this.id_community);
-        this.planificationService.fillDayClasses(this.id_establishment);
+        this.planificationService.fillDayClasses(this.id_community);
         this.planificationService.fillWarmUps();
         this.planificationService.fillElementsByApparatus();
-        this.planificationService.fillPhysicalPreparations();
-        this.planificationService.fillClasses(this.id_establishment);    
+        this.planificationService.fillPhysicalPreparations(); 
         this.planificationService.fillPlanifications(this.id_establishment);   
         this.worklineService.setWorklines();
         this.groupService.fillGroups(this.id_establishment);
         this.groupService.fillDifficulties();
-        this.userService.fillUsersByEstablishment(this.id_establishment);
+        this.userService.fillUsersByCommunity(this.id_community);
       }
     });
    }
@@ -92,13 +97,12 @@ export class DashboardComponent implements OnInit {
       return this.communityService.getSelectedEstablishment(this.id_establishment);
     }
 
-    update() {
-      this.userService.fillUsersByEstablishment(this.id_establishment);
-      this.groupService.fillGroups(this.id_establishment);
-    }
-
     get selectedClass() {
       return this.classSelected;
+    }
+
+    get isDataLoaded(): boolean {
+      return this.planificationService.isAllDataLoaded;
     }
   
 }

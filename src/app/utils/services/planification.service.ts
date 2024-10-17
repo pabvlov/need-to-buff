@@ -23,17 +23,18 @@ export class PlanificationService {
   classes: GetClasses[] = [];
   dayClasses: GetClasses[] = [];
   planifications: GetPlanifications[] = [];
+  isAllDataLoaded: boolean = false;
 
-  fillClasses(id_establishment: number) {
-    this.getClasses(id_establishment).subscribe((data: GetClasses[]) => {
+  fillClasses(id_community: number) {
+    this.getClasses(id_community).subscribe((data: GetClasses[]) => {
       if (data != null) {
         this.classes = data;
       }
     });
   }
 
-  fillDayClasses(id_establishment: number) {
-    this.getDayClasses(id_establishment).subscribe((data: GetClasses[]) => {
+  fillDayClasses(id_community: number) {
+    this.getDayClasses(id_community).subscribe((data: GetClasses[]) => {
       if (data != null) {
         this.dayClasses = data;
       } else {
@@ -73,9 +74,13 @@ export class PlanificationService {
   }
 
   fillPlanifications(id_establishment: number) {
+    if(this.planifications.length === 0) {
+      this.isAllDataLoaded = false;
+    }
     this.getPlanifications(id_establishment).subscribe((data: GetPlanifications[]) => {
       if (data != null) {
         this.planifications = data;
+        this.isAllDataLoaded = true;
       }
     });
   }
@@ -139,12 +144,12 @@ export class PlanificationService {
     return this.http.post<CreateClass>(environment.apiUrl + environment.endpoints.createClass, classData);
   }
 
-  getClasses(id_establishment: number) {
-    return this.http.get<GetClasses[]>(environment.apiUrl + environment.endpoints.showClasses + `?id_establishment=${id_establishment}`);
+  getClasses(id_community: number) {
+    return this.http.get<GetClasses[]>(environment.apiUrl + environment.endpoints.showClasses + `?id_community=${id_community}`);
   }
 
-  getDayClasses(id_establishment: number) {
-    return this.http.get<GetClasses[]>(environment.apiUrl + environment.endpoints.showTodayClasses + `?id_establishment=${id_establishment}`);
+  getDayClasses(id_community: number) {
+    return this.http.get<GetClasses[]>(environment.apiUrl + environment.endpoints.showTodayClasses + `?id_community=${id_community}`);
   }
 
   getPlanifications(id_establishment: number): Observable<GetPlanifications[]> {
