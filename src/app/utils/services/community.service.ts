@@ -58,6 +58,15 @@ export class CommunityService {
     return this.selectedEstablishment = this.establishments.find(est => est.id === id_establishment)!;
   }
 
+  createBanner(description: string, file: File, id_establishment: number, id_user: number): Observable<any> {
+    let body = new FormData();
+    body.append('description', description);
+    body.append('file', file);
+    body.append('id_establishment', id_establishment.toString());
+    body.append('id_user', id_user.toString());
+    return this.httpClient.post(environment.apiUrl + environment.endpoints.createBanner, body)
+  }
+
 
 
 }

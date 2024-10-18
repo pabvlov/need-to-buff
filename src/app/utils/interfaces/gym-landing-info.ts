@@ -5,13 +5,15 @@ export interface GymLandingInfo {
 }
 
 export interface Banner {
-    url:              string;
+    id:            number;
+    url:            string;
     id_establishment: number;
-    id_athlete:       number;
-    athlete_name:    string;
-    athlete_lastname: string;
-    description:      string;
-    index:            number;
+    id_user:        number;
+    user_name:      string;
+    user_lastname:  string;
+    user_mail:      string;
+    description:    string;
+    index:          number;
 }
 
 export interface Community {

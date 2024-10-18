@@ -46,6 +46,13 @@
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
             </li>
+            <li>
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
+                    [ngClass]="{active: show == 'banners'}" (click)="show = 'banners'"
+                    data-bs-placement="right" data-bs-original-title="Groups">
+                    <i class="fa-solid fa-tv"></i>
+                </a>
+            </li>
         </ul>
         <div class="dropdown border-top">
             <a href="#"
@@ -91,6 +98,17 @@
         <app-exercises *ngIf="show == 'exercises'"></app-exercises>
         <app-planification *ngIf="show == 'planification'" [id_establishment]="id_establishment"></app-planification>
         <app-class *ngIf="show == 'class'" [idClass]="classSelected"></app-class>
+        <app-banners *ngIf="show == 'banners'"></app-banners>
+        <div *ngIf="show == 'dashboard'">
+            <mat-chip-set aria-label="Fish selection">
+                <mat-chip>{{ establishments.length }} {{ establishments.length == 1 ? 'establecimiento': 'establecimientos' }}</mat-chip>
+                <mat-chip>{{ athletes.length }} {{ athletes.length == 1 ? 'atleta': 'atletas' }}</mat-chip>
+                <mat-chip>{{ users.length }} {{ users.length == 1 ? 'cliente': 'clientes' }}</mat-chip>
+                <mat-chip>{{ worklines.length }} {{ worklines.length == 1 ? 'línea de trabajo': 'líneas de trabajo' }}</mat-chip>
+                <mat-chip>{{ groups.length }} {{ groups.length == 1 ? 'grupo': 'grupos' }}</mat-chip>
+                <mat-chip>{{ banners.length }} {{ banners.length == 1 ? 'banner': 'banners' }}</mat-chip>
+            </mat-chip-set>
+        </div>
     </div>
 </section>
 

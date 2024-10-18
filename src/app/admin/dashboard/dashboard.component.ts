@@ -16,6 +16,8 @@ import { ClassComponent } from './classes/class/class.component';
 import {MatFormField, MatSelectModule} from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ScreenLoadingComponent } from '../../common/screen-loading/screen-loading.component';
+import {MatChipsModule} from '@angular/material/chips';
+import { BannersComponent } from './banners/banners.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,7 +33,9 @@ import { ScreenLoadingComponent } from '../../common/screen-loading/screen-loadi
     ClassComponent,
     MatSelectModule,
     MatFormFieldModule,
-    ScreenLoadingComponent
+    ScreenLoadingComponent,
+    MatChipsModule,
+    BannersComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -78,7 +82,7 @@ export class DashboardComponent implements OnInit {
         this.planificationService.fillPhysicalPreparations(); 
         this.planificationService.fillPlanifications(this.id_establishment);   
         this.worklineService.setWorklines();
-        this.groupService.fillGroups(this.id_establishment);
+        this.groupService.fillGroups(this.id_community);
         this.groupService.fillDifficulties();
         this.userService.fillUsersByCommunity(this.id_community);
       }
@@ -104,5 +108,34 @@ export class DashboardComponent implements OnInit {
     get isDataLoaded(): boolean {
       return this.planificationService.isAllDataLoaded;
     }
+
+    get athletes() {
+      return this.userService.athletes;
+    }
+
+    get users() {
+      return this.userService.getUsers.establishments.filter(u => u.id_establishment == this.id_establishment)
+    }
+
+    get worklines() {
+      return this.worklineService.worklines;
+    }
+
+    get groups() {
+      return this.groupService.groups;
+    }
+
+    get difficulties() {
+      return this.groupService.difficulties;
+    }
+
+    get banners() {
+      return this.communityService.banners;
+    }
+
+    get community() {
+      return this.communityService.community;
+    }
+
   
 }

@@ -87,4 +87,8 @@ export class AuthService {
     } else localStorage.setItem('password', password)
     this._usuario = user;
   }
+
+  get user() {
+    return this._usuario;
+  }
 }

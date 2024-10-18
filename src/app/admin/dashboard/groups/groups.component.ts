@@ -22,6 +22,7 @@ export class GroupsComponent {
 
   editingGroup: number = 0;
   id_establishment: number = 0;
+  id_community: number = 0;
 
   constructor(private userService: UserService, 
               private fb: FormBuilder, 
@@ -31,6 +32,7 @@ export class GroupsComponent {
               private planningService: PlanificationService) {
     this.route.params.subscribe(res => {
       this.id_establishment = res['id_establishment'];
+      this.id_community = res['id_community'];
     });
    }
 
@@ -61,7 +63,7 @@ export class GroupsComponent {
       this.groupService.addAthleteToGroup(this.editingGroup, parseInt(this.addAthlete.value.id_athlete!)
       ).subscribe((data) => {
         if (data.affectedRows > 0) {
-          this.groupService.fillGroups(this.id_establishment);
+          this.groupService.fillGroups(this.id_community);
           this.swal.success('Listo', 'Atleta agregado al grupo');
         }
       });

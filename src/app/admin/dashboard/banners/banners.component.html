@@ -1,0 +1,53 @@
+<div class="container maischiquito">
+
+    <!-- button  -->
+    <button class="card w-100 my-2" type="button" data-bs-toggle="modal" data-bs-target="#createBanner"
+        style="background-color: rgb(197, 197, 197); text-align: center;">
+        <div class="add">
+            <i class="fa-solid fa-plus"></i>
+        </div>
+    </button>
+
+    <mat-card class="card mx-auto" appearance="outlined" *ngFor="let banner of banners">
+        <mat-card-header>
+          <div mat-card-avatar class="header-image"></div>
+          <mat-card-title>{{ banner.user_name }} {{ banner.user_lastname }}</mat-card-title>
+          <mat-card-subtitle>{{ banner.id }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <p>
+            {{ banner.description }}
+          </p>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div class="modal fade" id="createBanner" tabindex="-1" aria-labelledby="createBannerLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createBannerLabel">Agregar Banner</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="createBanner" (submit)="addBanner()">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="description" class="col-form-label">Descripción:</label>
+                        <input type="mail" class="form-control" id="description" formControlName="description">
+                    </div>
+                    <div class="mb-3">
+                        <label for="file-input" class="col-form-label">Imagen</label>
+                        <input id="file-input" type="file" (change)="handleFileInput($event)" accept="image/*"
+                            #picture />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!createBanner.valid">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
