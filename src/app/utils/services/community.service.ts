@@ -59,6 +59,8 @@ export class CommunityService {
   }
 
   createBanner(description: string, file: File, id_establishment: number, id_user: number): Observable<any> {
+    console.log(description, file, id_establishment, id_user);
+    
     let body = new FormData();
     body.append('description', description);
     body.append('file', file);

@@ -2,7 +2,7 @@ import { find } from "rxjs";
 import { CreateClass } from '../utils/interfaces/simple-post';
 
 export const environment = {
-    apiUrl: 'http://localhost:3000',
+    apiUrl: 'http://143.198.232.23:3000',
     endpoints: {
         renew: '/auth/renew',
         login: '/auth/login',

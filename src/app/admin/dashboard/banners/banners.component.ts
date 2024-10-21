@@ -50,6 +50,7 @@ export class BannersComponent implements OnInit {
 
   addBanner() {
     console.log("asdasd");
+    console.log(this.authService._usuario);
     
     this.communityService.createBanner(this.createBanner.value.description!, this.picture, this.id_establishment, this.authService.user.id);
   }
