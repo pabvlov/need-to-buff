@@ -41,18 +41,16 @@ export class BannersComponent implements OnInit {
   });
 
   handleFileInput($event: Event) {
-    this.picture = $event;
-    let formData = new FormData();
-    formData.append('file', this.picture.target!.files[0]);
-    console.log(this.picture);
-    
+    this.picture = $event;    
   }
 
   addBanner() {
     console.log("asdasd");
-    console.log(this.authService._usuario);
+    console.log(this.authService.getUserId());
     
-    this.communityService.createBanner(this.createBanner.value.description!, this.picture, this.id_establishment, this.authService.user.id);
+    this.communityService.createBanner(this.createBanner.value.description!, this.picture, this.id_establishment, this.authService.getUserId()).subscribe(res => {
+      console.log(res);
+    });
   }
 
 }

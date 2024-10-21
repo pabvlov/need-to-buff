@@ -42,7 +42,6 @@ export class AuthService {
 
   loginUser(mail: string, password: string) { // loguear al usuario
     const url = environment.apiUrl + environment.endpoints.login
-    console.log(url);
 
     return this.httpClient.post<Session>(url, { mail, password })
       .pipe(
@@ -75,6 +74,13 @@ export class AuthService {
       }
     });
   }
+
+  getUserId() {
+    const helper = new JwtHelperService();
+    const token = localStorage.getItem('token');
+    return helper.decodeToken(token!).id;
+  }
+
   // mail, name, lastname, gender, password, contact
   registerUser(mail: String, nickname: String, name: String, lastname: String, gender: String, contact: Number, birthdate: Date, password: String): any {
     let register = this.httpClient.post(environment.apiUrl + environment.endpoints.register, { mail, nickname, name, lastname, gender, contact, birthdate, password })

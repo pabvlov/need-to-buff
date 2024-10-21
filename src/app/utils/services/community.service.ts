@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Banner, Community, Establishment, GymLandingInfo } from '../interfaces/gym-landing-info';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { SwalService } from './swal.service';
 
@@ -66,7 +66,12 @@ export class CommunityService {
     body.append('file', file);
     body.append('id_establishment', id_establishment.toString());
     body.append('id_user', id_user.toString());
-    return this.httpClient.post(environment.apiUrl + environment.endpoints.createBanner, body)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data',
+      })
+    };
+    return this.httpClient.post(environment.apiUrl + environment.endpoints.createBanner, body, httpOptions);
   }
 
 
