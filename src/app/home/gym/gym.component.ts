@@ -8,6 +8,15 @@ import { ScreenLoadingComponent } from '../../common/screen-loading/screen-loadi
 import { PlanificationService } from '../../utils/services/planification.service';
 import { WorklineService } from '../../utils/services/workline.service';
 import { GroupService } from '../../utils/services/group.service';
+import { environment } from '../../environments/environment';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatChipsModule} from '@angular/material/chips';
+import { ProfileMenuComponent } from '../../common/profile-menu/profile-menu.component';
+import { AuthService } from '../../utils/services/auth.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-gym',
@@ -15,7 +24,14 @@ import { GroupService } from '../../utils/services/group.service';
   imports: [
     CommonModule,
     RouterModule,
-    ScreenLoadingComponent
+    ScreenLoadingComponent,
+    MatTabsModule,
+    MatProgressBarModule,
+    MatChipsModule,
+    ProfileMenuComponent,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   templateUrl: './gym.component.html',
   styleUrl: './gym.component.css'
@@ -24,14 +40,19 @@ export class GymComponent implements OnInit {
 
   bannerPosition = 1;
   communityId!: number;
-  constructor(private route: ActivatedRoute, 
-              private communityService: CommunityService,  
-              private location: Location, 
-              private userService: UserService,
+  comment: string = '';
+  fileName: string | undefined;
+  constructor(private route:                ActivatedRoute, 
+              private communityService:     CommunityService,  
+              private location:             Location, 
+          private userService:              UserService,
               private planificationService: PlanificationService,
-              private groupService: GroupService,
-              private worklineService: WorklineService
-            ) { }
+              private groupService:         GroupService,
+              private worklineService:      WorklineService,
+              private authService:          AuthService
+            ) {
+              this.authService.renewSession();
+             }
 
   get banners(): Banner[] {
     return this.communityService.banners;
@@ -48,10 +69,23 @@ export class GymComponent implements OnInit {
   get isLandingInfoLoaded(): boolean {
     return this.communityService.isLandingInfoLoaded;
   }
+
+  onFileSelected(event: Event): void {
+      const input = event.target as HTMLInputElement;
+      if (input.files && input.files.length > 0) {
+          this.fileName = input.files[0].name;
+      }
+  }
     
   ngOnInit(): void {
     this.communityId = parseInt(this.route.snapshot.paramMap.get('id')!);
     this.communityService.setGymLandingInfo(this.communityId);
+  }
+
+  setComment($event: Event) {
+    console.log(($event.target as HTMLInputElement).value);
+    
+    this.comment = ($event.target as HTMLInputElement).value;
   }
 
   volver() {
@@ -88,4 +122,15 @@ export class GymComponent implements OnInit {
         this.userService.fillUsersByCommunity(this.communityId);
   }
 
+  get bannerImagePath() {
+    return environment.apiUrl + '/banners/';
+  }
+
+  isImage(url: string) {
+    return url.toLocaleLowerCase()!.match(/\.(jpeg|jpg|gif|png)$/)  != null;
+  }
+
+  get isUserLoggedIn(): boolean {
+    return this.authService.isAuthenticated();
+  }
 }

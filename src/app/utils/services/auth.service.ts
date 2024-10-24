@@ -63,6 +63,7 @@ export class AuthService {
             localStorage.setItem('token', data.body.content.token!) // guardamos el jwt en localstorage
             const { user } = data.body.content
             this._usuario = user
+            this.loggedIn = true
           }
         }
         console.log(`This contains body: ${data.body}`);

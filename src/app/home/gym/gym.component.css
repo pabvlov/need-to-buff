@@ -2,16 +2,20 @@
     display: flex;
     justify-content: space-between;
     height: 100px;
-    margin: 20px;
+    padding: 20px;
+    position: absolute;
+    z-index: 99;
+    width: 100%;
 }
 
 .simple-navbar {
     display: flex;
     align-items: center;
+    background-color: white;
+    border-radius: 30px;
 }
 
 .admin {
-    height: 100px;
     display: flex;
     align-items: center;
 }
@@ -19,34 +23,32 @@
 .gym-acronym {
     font-size: 2em;
     font-weight: bold;
-    margin-right: 20px;
     margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 30px;
+    color: var(--secondary-color)
 }
 
 .banners {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 20px;
+    position: absolute;
+    width: 100%;
 }
 
 .carousel-item, .carousel-inner {
-    width: 100%;
-    height: 600px;
     object-fit: fill;
 }
 
 .establishments {
     display: flex;
     justify-content: space-between;
-}
-
-.card.establishments {
-    margin-top: 20px;
+    margin-top: 60vh;
 }
 
 .bannerImage {
-    width: 100%;
-    height: 600px;
+    height: 70vh;
     object-fit: cover;
 }
 
@@ -69,14 +71,6 @@
     border: 2px solid var(--primary-color);
 }
 
-.social-reason {
-    margin-left: 20px;
-}
-
-.h1 {
-    margin-left: 20px;
-}
-
 a {
     text-decoration: none;
     color: #000;
@@ -89,7 +83,7 @@ p {
 
 .fa-facebook, .fa-instagram, .fa-twitter {
     font-size: 1.5em;
-    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .fa-facebook {
@@ -98,4 +92,135 @@ p {
 
 .fa-instagram {
     color: #e4405f;
+}
+
+.volver {
+    background-color: transparent;
+    border: none;
+    color: var(--secondary-color)
+}
+
+.btn-ntb {
+    background-color: var(--secondary-color);
+    color: white;
+    margin-right: 5px;
+}
+
+.chip {
+    margin: 5px 10px;
+}
+
+.bannerVideo {
+    width: 100%    !important;
+    height: 70vh   !important;
+    object-fit: cover;
+}
+
+/* Estilo de la tarjeta de comentarios */
+.comments mat-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.comments mat-card-content h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4b4f56; /* Color de texto estilo Facebook */
+    margin: 0;
+}
+
+.comments mat-form-field {
+    width: 100%;
+}
+
+.comments textarea {
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccd0d5; /* Estilo de borde sutil */
+    background-color: #f2f3f5; /* Fondo claro estilo Facebook */
+}
+
+/* Estilo para la sección de subir imagen */
+.upload-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 8px 15px;
+    cursor: pointer;
+    background-color: #1877f2;
+    color: white;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espaciado entre el icono y el texto */
+    transform: translateY(-30px);
+}
+
+.custom-file-upload i {
+    font-size: 20px; /* Tamaño del ícono de la camarita */
+}
+
+.custom-file-upload:hover {
+    background-color: #145dbf; /* Azul más oscuro en hover */
+}
+
+#file-upload {
+    display: none; /* Ocultar el input de archivo real */
+}
+
+.file-name {
+    font-size: 14px;
+    color: #4b4f56;
+}
+
+/* Estilo del botón de comentar */
+.comments button {
+    background-color: #1877f2; /* Color azul estilo Facebook */
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block; /* Asegura que el botón esté en su propia línea */
+    transform: translateY(-30px);
+}
+
+.comments button:hover {
+    background-color: #145dbf; /* Azul más oscuro en hover */
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .comments mat-card {
+        padding: 10px;
+    }
+
+    .comments mat-card-content h2 {
+        font-size: 16px;
+    }
+
+    .custom-file-upload {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .comments button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
 }

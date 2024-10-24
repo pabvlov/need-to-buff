@@ -1,0 +1,8 @@
+<button mat-mini-fab [matMenuTriggerFor]="menu" class="profile-button">
+    <i class="fa-regular fa-user"></i>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>Mis atletas</button>
+  <button mat-menu-item>Mi contenido</button>
+  <button mat-menu-item (click)="closeSession()">Cerrar sesión</button>
+</mat-menu>

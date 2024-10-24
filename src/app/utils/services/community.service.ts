@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { SwalService } from './swal.service';
+import { PostImage } from '../interfaces/post-image';
 
 @Injectable({
   providedIn: 'root'
@@ -58,8 +59,7 @@ export class CommunityService {
     return this.selectedEstablishment = this.establishments.find(est => est.id === id_establishment)!;
   }
 
-  createBanner(description: string, file: File, id_establishment: number, id_user: number): Observable<any> {
-    console.log(description, file, id_establishment, id_user);
+  createBanner(description: string, file: File, id_establishment: number, id_user: number): Observable<PostImage> {
     
     let body = new FormData();
     body.append('description', description);
@@ -68,10 +68,22 @@ export class CommunityService {
     body.append('id_user', id_user.toString());
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'multipart/form-data',
       })
     };
-    return this.httpClient.post(environment.apiUrl + environment.endpoints.createBanner, body, httpOptions);
+    return this.httpClient.post<PostImage>(environment.apiUrl + environment.endpoints.createBanner, body, httpOptions);
+  }
+
+  /* uploadImage(this.chosenElement, this.selectedFile) */
+
+  uploadImage(chosenElement: number, file: File): Observable<PostImage> {
+    let body = new FormData();
+    body.append('file', file);
+    body.append('id_element', chosenElement.toString());
+    const httpOptions = {
+      headers: new HttpHeaders({
+      })
+    };
+    return this.httpClient.post<PostImage>(environment.apiUrl + environment.endpoints.uploadImage, body, httpOptions);
   }
 
 

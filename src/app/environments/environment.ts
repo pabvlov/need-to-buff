@@ -45,5 +45,6 @@ export const environment = {
         attachPlanificationToClasses: '/class/attachPlanifications',
         checkPresence: '/class/presence',
         createBanner: '/community/banner/upload',
+        uploadImage: '/element/image/upload',
     }
 }

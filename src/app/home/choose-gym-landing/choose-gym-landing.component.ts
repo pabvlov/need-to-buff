@@ -22,7 +22,7 @@ export class ChooseGymLandingComponent implements OnInit, AfterContentInit {
   get communities(): Community[] {
     return this.userService.communities;
   }
-
+  
   ngOnInit(): void {
     this.userService.getCommunities();
   }

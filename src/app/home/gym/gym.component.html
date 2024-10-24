@@ -4,81 +4,92 @@
         <h1 class="gym-acronym">{{ community.acronym }}</h1>
     </div>
     <div class="admin">
+        <app-profile-menu *ngIf="isUserLoggedIn"></app-profile-menu>
+        <a [routerLink]="['/auth/login/']"
+         routerLinkActive="router-link-active" *ngIf="!isUserLoggedIn"
+         class="btn btn-ntb">Ingresar</a>
         <a [routerLink]="['/admin/dashboard/' + communityId + '/' + establishments[0].id]"
          routerLinkActive="router-link-active" 
-         class="btn btn-danger" (click)="load()">Administrar</a>
+         class="btn btn-ntb" (click)="load()">Administrar</a>
     </div>
 </section>
-<div class="container-fluid" *ngIf="isLandingInfoLoaded">
+<section class="banners" *ngIf="isLandingInfoLoaded">
+    <div id="banner" class="carousel slide">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#banner-images" [attr.data-bs-slide-to]="banner.index-1"
+                class="active" [attr.aria-current]="banner.index == bannerPosition ? 'true':'false'"
+                aria-label="Slide" *ngFor="let banner of banners"
+                [ngClass]="banner.index == bannerPosition ? 'active':''"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item" *ngFor="let banner of banners"
+                [ngClass]="banner.index == bannerPosition ? 'active':''">
+                <ng-container *ngIf="isImage(banner.url);then image else video"></ng-container>
+                <ng-template #video>
+                    <video autoplay [muted]="true" loop class="bannerVideo" >
+                        <source [src]="bannerImagePath + banner.url" type="video/mp4">
+                    </video>
+                </ng-template>
+                <ng-template #image>
+                    <img [src]="bannerImagePath + banner.url" class="d-block w-100 bannerImage"
+                    [alt]="banner.description == null ? '' : banner.description">
+                </ng-template>
+                <div class="carousel-caption d-none d-md-block">
+                    <p>{{ banner.description }}</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#banner-images"
+            data-bs-slide="prev" (click)="back()">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#banner-images"
+            data-bs-slide="next" (click)="next()">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+<div class="container" *ngIf="isLandingInfoLoaded">
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8 col-xl-8">
-            <section class="banners">
-                <div id="banner" class="carousel slide">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#banner-images" [attr.data-bs-slide-to]="banner.index-1"
-                            class="active" [attr.aria-current]="banner.index == bannerPosition ? 'true':'false'"
-                            aria-label="Slide" *ngFor="let banner of banners"
-                            [ngClass]="banner.index == bannerPosition ? 'active':''"></button>
-                    </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item" *ngFor="let banner of banners"
-                            [ngClass]="banner.index == bannerPosition ? 'active':''">
-                            <img [src]="banner.url" class="d-block w-100 bannerImage"
-                                [alt]="banner.description == null ? '' : banner.description">
-                            <div class="carousel-caption d-none d-md-block">
-                                <p>{{ banner.description }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#banner-images"
-                        data-bs-slide="prev" (click)="back()">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#banner-images"
-                        data-bs-slide="next" (click)="next()">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </section>
+
         </div>
         <div class="col-12 col-md-12 col-lg-4 col-xl-4">
             <div class="card establishments">
-                <div class="card-header">
-                    <h2 class="color-primary text-center">Establecimientos</h2>
-                </div>
-                <div class="card-body">
-                    <div class="list-group">
-                        <div *ngFor="let establishment of establishments"
-                            class="list-group-item list-group-item-action">
-                            <a>{{ establishment.name }}</a>
-                            <p>{{ establishment.address }}</p>
-                            <p>Aforo: {{ establishment.capacity }}</p>
-                            <div class="members">
-                                <div class="member" *ngFor="let member of establishment.athletes">
-                                    <img [src]="member.image == null ? 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg' : member.image"
-                                        alt="" class="member-image">
-                                    <a href="#" class="member-name">{{ member.athlete_name }} {{ member.athlete_lastname
-                                        }}</a>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+                <mat-tab-group>
+                    <mat-tab [label]="establishment.name" *ngFor="let establishment of establishments">
+                        <ng-template matTabContent>
+                            <mat-chip-set class="chip">
+                                <mat-chip>
+                                    <i class="fa-solid fa-warehouse"></i>
+                                  {{ establishment.capacity}} personas
+                                </mat-chip>
+                                <mat-chip>
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    {{ establishment.address }}
+                                </mat-chip>
+                                <mat-chip>
+                                    <i class="fa-solid fa-users-line"></i>
+                                  {{ establishment.athletes.length }} {{ establishment.athletes.length == 1 ? 'cliente': 'clientes' }}
+                                </mat-chip>
+                              </mat-chip-set>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
             </div>
         </div>
     </div>
 
     <div class="community-info">
-        <div class="container-fluid">
+        <div class="container">
             <div class="community-description">
                 <p>{{ community.description }}</p>
             </div>
             <div class="gym-presentation">
-                <img [src]="community.logo == null ? 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg' : community.logo"
-                    alt="" class="gym-logo">
+                <!-- <img [src]="community.logo == null ? 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg' : community.logo"
+                    alt="" class="gym-logo"> -->
                 <h1 class="social-reason">{{ community.razon_social }} [{{ community.acronym }}]</h1>
             </div>
             <!-- instagram y facebook -->
@@ -90,6 +101,40 @@
                     <i class="fab fa-facebook"></i>
                 </a>
             </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<div class="container" *ngIf="isLandingInfoLoaded">
+    <div class="row">
+        <div class="col-lg-8 col-md-6 col-sm-12">
+            
+            <section class="comments">
+                <!-- Insertar Comentario -->
+    
+                <mat-card appearance="outlined">
+                    <mat-card-content>
+                        <mat-form-field>
+                            <textarea matInput placeholder="Escribe un comentario" (change)="setComment($event)"></textarea>
+                        </mat-form-field>
+                        
+                        <!-- Campo para subir una imagen -->
+                        <div class="upload-section">
+                            <label for="file-upload" class="custom-file-upload">
+                                <i class="fa-solid fa-camera"></i>
+                            </label>
+                            <input id="file-upload" type="file" (change)="onFileSelected($event)" hidden />
+                            <span class="file-name" *ngIf="fileName">{{ fileName }}</span>
+                        </div>
+                        
+                        <!-- Botón para comentar -->
+                        <button class="btn btn-primary">Comentar</button>
+                    </mat-card-content>
+                </mat-card>
+    
+            </section>
         </div>
     </div>
 </div>

@@ -5,6 +5,7 @@ import { PlanificationService } from '../../../../utils/services/planification.s
 import { SwalService } from '../../../../utils/services/swal.service';
 import { Element, RequestCreateElement } from '../../../../utils/interfaces/element';
 import { CommonModule } from '@angular/common';
+import { CommunityService } from '../../../../utils/services/community.service';
 
 @Component({
   selector: 'app-elements',
@@ -22,14 +23,17 @@ export class ElementsComponent {
   chosenElement: number = 0;
   chosenApparatus: number = 0;
   selectedElements: Element[] = [];
+  id_community: number = 0;
 
   constructor(private fb: FormBuilder,
               private route: ActivatedRoute,
               private planningService: PlanificationService,
-              private swal: SwalService) 
+              private swal: SwalService,
+              private communityService: CommunityService) 
   { 
     this.route.params.subscribe(res => {
       this.id_establishment = res['id_establishment'];
+      this.id_community = res['id_community'];
     });
   }
 /* RequestCreateElement */
@@ -106,6 +110,35 @@ export class ElementsComponent {
 
   get apparatuses() {
     return this.planningService.apparatuses;
+  }
+
+  selectedFile: File | null = null;
+
+  handleFileInput($event: Event) {
+    const input = $event.target as HTMLInputElement;
+    if (input && input.files) {
+      this.selectedFile = input.files[0];
+    }
+  }
+
+  uploadElementImage($event: Event) {
+    $event.preventDefault();
+    
+    if (this.selectedFile) {
+      this.swal.loading();
+      this.communityService.uploadImage(this.chosenElement, this.selectedFile).subscribe({
+        complete: () => {
+          console.log('complete');
+          
+          this.swal.success('Subida de imagen', 'Banner creado exitosamente');
+          this.communityService.getGymLandingInfo(this.id_community);
+        },
+        error: (error) => {
+          console.error('Error creating banner', error);
+          this.swal.close();
+        }
+      });
+    }
   }
 
 }

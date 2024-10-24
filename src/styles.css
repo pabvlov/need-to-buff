@@ -34,6 +34,14 @@
     color: #1900ff !important;
 }
 
+.bg-primary {
+    background-color: #03BB85;
+}
+
+.bg-secondary {
+    background-color: #1900ff;
+}
+
 strong {
     color: #03BB85;
 }

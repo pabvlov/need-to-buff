@@ -1,0 +1,5 @@
+.profile-button {
+    margin: auto 10px;
+    background-color: var(--secondary-color);
+    color: white;
+}

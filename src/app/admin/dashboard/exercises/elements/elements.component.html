@@ -20,6 +20,12 @@
             <td>{{ e.name }}</td>
             <td>{{ e.difficulty }}</td>
             <td>
+                <button class="card w-100 my-2" type="button" data-bs-toggle="modal" data-bs-target="#uploadImage" (click)="chooseElement(e.id, apparatus.id)"
+                    style="background-color: rgb(197, 197, 197); text-align: center;">
+                    <div class="add">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                </button>
                 <button class="" data-bs-toggle="modal" data-bs-target="#createAttachment" id="agregar"><i class="fa-solid fa-plus" (click)="chooseElement(e.id, apparatus.id)"></i></button>
                 <span class="badge bg-primary" *ngFor="let connection of e.connections">{{ connection.name }}</span>
             </td>
@@ -122,3 +128,28 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="uploadImage" tabindex="-1" aria-labelledby="uploadImageLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createBannerLabel">Agregar Banner</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form (submit)="uploadElementImage($event)">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="file-input" class="col-form-label">Imagen</label>
+                        <input id="file-input" type="file" (change)="handleFileInput($event)" accept="image/*, video/*"
+                            #picture />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
