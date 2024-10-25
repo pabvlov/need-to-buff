@@ -1,19 +1,21 @@
 export interface GymLandingInfo {
-    banners:        Banner[];
+    banners:        Content[];
     community:      Community;
     establishments: Establishment[];
+    content:        Content[];
 }
 
-export interface Banner {
-    id:            number;
-    url:            string;
-    id_establishment: number;
-    id_user:        number;
-    user_name:      string;
-    user_lastname:  string;
-    user_mail:      string;
-    description:    string;
-    index:          number;
+export interface Content {
+    id:                number;
+    url:               string;
+    id_establishment?: number;
+    id_user:           number;
+    user_name:         string;
+    user_lastname:     string;
+    user_mail:         string;
+    description:       string;
+    index?:            number;
+    date?:             null;
 }
 
 export interface Community {
@@ -39,6 +41,6 @@ export interface Athlete {
     id_establishment: number;
     athlete_name:     string;
     athlete_lastname: string;
-    birthdate:        null;
-    image:            string;
+    birthdate:        Date;
+    image:            null;
 }

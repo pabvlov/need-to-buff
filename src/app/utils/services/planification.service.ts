@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { DeleteWarmUp, PostWarmUp, WarmUps, WarmUpsByClass } from '../interfaces/warm-ups';
@@ -10,6 +10,7 @@ import { CreateClassRequest } from '../interfaces/create-class-request';
 import { GetPlanifications, PostPlanificationResponse, RequestPostPlanification } from '../interfaces/get-planifications';
 import { PhysicalPreparation } from '../interfaces/physical-preparations';
 import { PostPresence } from '../interfaces/post-presence';
+import { PostImage } from '../interfaces/post-image';
 @Injectable({
   providedIn: 'root'
 })
@@ -181,4 +182,19 @@ export class PlanificationService {
     }
     return this.http.post<SimplePost>(environment.apiUrl + environment.endpoints.checkPresence, body);
   }
+
+  /* createComment(this.comment, this.authService.getUserId(), this.communityId, this.file) */
+  createComment(comment: string, id_user: number, id_community: number, file: File) {
+    let body = new FormData();
+    body.append('comment', comment);
+    body.append('id_user', id_user.toString());
+    body.append('id_community', id_community.toString());
+    body.append('file', file);
+    const httpOptions = {
+      headers: new HttpHeaders({
+      })
+    };
+    return this.http.post<PostImage>(environment.apiUrl + environment.endpoints.createComment, body, httpOptions);
+  }
+  
 }

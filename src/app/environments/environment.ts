@@ -1,6 +1,3 @@
-import { find } from "rxjs";
-import { CreateClass } from '../utils/interfaces/simple-post';
-
 export const environment = {
     //apiUrl: 'http://147.182.141.224:3000',
     apiUrl: 'http://localhost:3000',
@@ -47,5 +44,6 @@ export const environment = {
         createBanner: '/community/banner/upload',
         uploadImage: '/element/image/upload',
         deleteContent: '/community/banner/delete',
+        createComment: '/community/comment/upload',
     }
 }

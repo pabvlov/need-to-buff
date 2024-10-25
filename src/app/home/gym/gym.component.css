@@ -8,6 +8,10 @@
     width: 100%;
 }
 
+.community-info {
+    margin-top: 20px;
+}
+
 .simple-navbar {
     display: flex;
     align-items: center;
@@ -33,7 +37,6 @@
 }
 
 .banners {
-    position: absolute;
     width: 100%;
 }
 
@@ -44,11 +47,13 @@
 .establishments {
     display: flex;
     justify-content: space-between;
-    margin-top: 60vh;
+    position: absolute;
+    top: 100px;
+    right: 20px;
 }
 
 .bannerImage {
-    height: 70vh;
+    height: 700px;
     object-fit: cover;
 }
 
@@ -149,7 +154,6 @@ p {
 .upload-section {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
 }
 
 .custom-file-upload {
@@ -165,7 +169,7 @@ p {
     display: flex;
     align-items: center;
     gap: 8px; /* Espaciado entre el icono y el texto */
-    transform: translateY(-10px);
+    transform: translateY(-15px);
 }
 
 .custom-file-upload i {
@@ -229,4 +233,35 @@ p {
     display: flex;
     justify-content: space-between;
     max-height: 40px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--secondary-color);
+    text-align: center;
+}
+
+.comment-body { 
+}
+
+.bannerImageContent, .bannerVideoContent {
+    width: 100%;
+    max-height: 400px !important;
+    object-fit: cover;
+    border-radius: 30px 30px 0 0;
+}
+
+.comment {
+    background-color: var(--grey-color);
+    box-shadow: 0px 31px 15px -30px rgba(0,0,0,0.35);
+    border-radius: 30px;
+    margin: 15px 0;
+}
+
+.comment-footer {
+    font-size: 1rem;
+    padding: 10px 20px;
+    text-align: justify;
 }

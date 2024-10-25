@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommunityService } from '../../utils/services/community.service';
-import { Banner, Community, Establishment } from '../../utils/interfaces/gym-landing-info';
+import { Content, Community, Establishment } from '../../utils/interfaces/gym-landing-info';
 import { CommonModule, Location } from '@angular/common';
 import { UserService } from '../../utils/services/user.service';
 import { ScreenLoadingComponent } from '../../common/screen-loading/screen-loading.component';
@@ -41,7 +41,7 @@ export class GymComponent implements OnInit {
   bannerPosition = 1;
   communityId!: number;
   comment: string = '';
-  fileName: string | undefined;
+  file: File | null = null;
   constructor(private route:                ActivatedRoute, 
               private communityService:     CommunityService,  
               private location:             Location, 
@@ -54,7 +54,7 @@ export class GymComponent implements OnInit {
               this.authService.renewSession();
              }
 
-  get banners(): Banner[] {
+  get banners(): Content[] {
     return this.communityService.banners;
   }
   
@@ -70,10 +70,14 @@ export class GymComponent implements OnInit {
     return this.communityService.isLandingInfoLoaded;
   }
 
+  get comments() {
+    return this.communityService.content;
+  }
+
   onFileSelected(event: Event): void {
       const input = event.target as HTMLInputElement;
       if (input.files && input.files.length > 0) {
-          this.fileName = input.files[0].name;
+          this.file = input.files[0];
       }
   }
     
@@ -83,7 +87,6 @@ export class GymComponent implements OnInit {
   }
 
   setComment($event: Event) {
-    console.log(($event.target as HTMLInputElement).value);
     
     this.comment = ($event.target as HTMLInputElement).value;
   }
@@ -126,11 +129,30 @@ export class GymComponent implements OnInit {
     return environment.apiUrl + '/banners/';
   }
 
+  get contentImagePath() {
+    return environment.apiUrl + '/content/';
+  }
+
   isImage(url: string) {
     return url.toLocaleLowerCase()!.match(/\.(jpeg|jpg|gif|png)$/)  != null;
   }
 
   get isUserLoggedIn(): boolean {
     return this.authService.isAuthenticated();
+  }
+
+  doComment() {
+    console.log(this.comment);
+    this.planificationService.createComment(this.comment, this.authService.getUserId(), this.communityId, this.file!).subscribe({
+      next: (response) => {
+        if (response.affectedRows == 2) {
+          this.comment = '';
+          this.file = null;
+        }
+      },
+      error: (error) => {
+        console.error('Error creating comment', error);
+      }
+    });
   }
 }

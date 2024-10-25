@@ -3,8 +3,10 @@ import { PlanificationService } from '../../../../utils/services/planification.s
 import { CommonModule } from '@angular/common';
 import { Element, RequestCreateElement } from '../../../../utils/interfaces/element';
 import { SwalService } from '../../../../utils/services/swal.service';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgPipesModule } from 'ngx-pipes';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-select-achievements',
@@ -12,7 +14,10 @@ import { NgPipesModule } from 'ngx-pipes';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NgPipesModule
+    NgPipesModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    ReactiveFormsModule
   ],
   templateUrl: './select-achievements.component.html',
   styleUrl: './select-achievements.component.css'
@@ -20,6 +25,7 @@ import { NgPipesModule } from 'ngx-pipes';
 export class SelectAchievementsComponent {
   @Input() apparatusesSelected: number[] = [];
   @Input() elementsSelected: number[] = [];
+  elementsSelected2 = new FormControl('');
   @Output() elementsSelectedChanges = new EventEmitter<number[]>();
 
   constructor(private planificationService: PlanificationService,

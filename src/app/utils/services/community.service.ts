@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Banner, Community, Establishment, GymLandingInfo } from '../interfaces/gym-landing-info';
+import { Content, Community, Establishment, GymLandingInfo } from '../interfaces/gym-landing-info';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
@@ -14,7 +14,8 @@ export class CommunityService {
 
   constructor(private httpClient: HttpClient, private swal: SwalService) { }
 
-  banners: Banner[] = [];
+  banners: Content[] = [];
+  content: Content[] = [];
   community: Community = {
     razon_social: '',
     acronym: '',
@@ -38,6 +39,7 @@ export class CommunityService {
         this.banners = data.banners;
         this.community = data.community;
         this.establishments = data.establishments;
+        this.content = data.content;
         this.isLandingInfoLoaded = true;
       }
     });
