@@ -114,26 +114,28 @@
             <section class="comments">
                 <!-- Insertar Comentario -->
     
-                <mat-card appearance="outlined">
-                    <mat-card-content>
+                
                         <mat-form-field>
                             <textarea matInput placeholder="Escribe un comentario" (change)="setComment($event)"></textarea>
                         </mat-form-field>
-                        
-                        <!-- Campo para subir una imagen -->
-                        <div class="upload-section">
-                            <label for="file-upload" class="custom-file-upload">
-                                <i class="fa-solid fa-camera"></i>
-                            </label>
-                            <input id="file-upload" type="file" (change)="onFileSelected($event)" hidden />
-                            <span class="file-name" *ngIf="fileName">{{ fileName }}</span>
+
+                        <div class="botones-juntos">
+                            <div class="upload-section">
+                                <label for="file-upload" class="custom-file-upload">
+                                    <i class="fa-solid fa-camera"></i>
+                                </label>
+                                <input id="file-upload" type="file" (change)="onFileSelected($event)" hidden />
+                                <span class="file-name" *ngIf="fileName">{{ fileName }}</span>
+                            </div>
+    
+                            <button class="btn btn-primary">Comentar</button>
                         </div>
                         
+                        <!-- Campo para subir una imagen -->
+                        
+                        
                         <!-- Botón para comentar -->
-                        <button class="btn btn-primary">Comentar</button>
-                    </mat-card-content>
-                </mat-card>
-    
+                        
             </section>
         </div>
     </div>

@@ -46,5 +46,6 @@ export const environment = {
         checkPresence: '/class/presence',
         createBanner: '/community/banner/upload',
         uploadImage: '/element/image/upload',
+        deleteContent: '/community/banner/delete',
     }
 }

@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { SwalService } from './swal.service';
 import { PostImage } from '../interfaces/post-image';
+import { SimplePost } from '../interfaces/simple-post';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,7 @@ export class CommunityService {
     return this.httpClient.get<GymLandingInfo>(environment.apiUrl + environment.endpoints.communityInfo + `?id=${communityId}`)
   }
 
-  setGymLandingInfo(communityId: number) {
+  async setGymLandingInfo(communityId: number) {
     this.isLandingInfoLoaded = false;
     this.getGymLandingInfo(communityId).subscribe((data: GymLandingInfo) => {
       if (data != null) {
@@ -86,6 +87,8 @@ export class CommunityService {
     return this.httpClient.post<PostImage>(environment.apiUrl + environment.endpoints.uploadImage, body, httpOptions);
   }
 
-
+  deleteBanner(id: number): Observable<SimplePost> {
+    return this.httpClient.delete<SimplePost>(environment.apiUrl + environment.endpoints.deleteContent + `?id=${id}`);
+  }
 
 }

@@ -73,6 +73,26 @@ export class BannersComponent implements OnInit {
     }
   }
 
+  deleteBanner(id: number) {
+    this.swal.loading();
+    this.communityService.deleteBanner(id).subscribe({
+      next: async (response) => {
+        if (response.affectedRows != 0) {
+          await this.communityService.setGymLandingInfo(this.id_community);
+          this.swal.success('Eliminación de imagen', 'Banner eliminado exitosamente');
+          
+        } else {
+          this.swal.error('Error', 'No se pudo eliminar el banner: ' + response.message);
+        }
+        
+      },
+      error: (error) => {
+        console.error('Error deleting banner', error);
+        this.swal.close();
+      }
+    });
+  }
+
   get imagePath() {
     return environment.apiUrl + '/banners/';
   }

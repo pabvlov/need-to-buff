@@ -165,7 +165,7 @@ p {
     display: flex;
     align-items: center;
     gap: 8px; /* Espaciado entre el icono y el texto */
-    transform: translateY(-30px);
+    transform: translateY(-10px);
 }
 
 .custom-file-upload i {
@@ -190,14 +190,14 @@ p {
     background-color: #1877f2; /* Color azul estilo Facebook */
     border: none;
     border-radius: 5px;
-    padding: 8px 15px;
     color: white;
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
     display: block; /* Asegura que el botón esté en su propia línea */
-    transform: translateY(-30px);
+    transform: translateY(-15px);
+    padding: 0 10px;
 }
 
 .comments button:hover {
@@ -223,4 +223,10 @@ p {
         font-size: 12px;
         padding: 6px 10px;
     }
+}
+
+.botones-juntos {
+    display: flex;
+    justify-content: space-between;
+    max-height: 40px;
 }

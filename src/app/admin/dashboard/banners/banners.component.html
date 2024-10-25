@@ -1,7 +1,7 @@
 <div class="container maischiquito">
 
     <!-- button  -->
-    <button class="card w-100 my-2" type="button" data-bs-toggle="modal" data-bs-target="#createBanner"
+    <button class="btn btn-ntb my-2" type="button" data-bs-toggle="modal" data-bs-target="#createBanner"
         style="background-color: rgb(197, 197, 197); text-align: center;">
         <div class="add">
             <i class="fa-solid fa-plus"></i>
@@ -9,10 +9,14 @@
     </button>
 
     <mat-card class="card mx-auto" appearance="outlined" *ngFor="let banner of banners">
-        <mat-card-header>
-          <div mat-card-avatar class="header-image"></div>
-          <mat-card-title>{{ banner.user_name }} {{ banner.user_lastname }}</mat-card-title>
-          <mat-card-subtitle>{{ banner.id }}</mat-card-subtitle>
+        <mat-card-header  class="header-image">
+            <div class="nombre-dueno-banner">{{ banner.user_name }} {{ banner.user_lastname }}</div>
+            <button class="btn bg-secondary my-2" type="button" (click)="deleteBanner(banner.id)"
+                style="background-color: rgb(197, 197, 197); text-align: center;">
+                <div class="add">
+                    <i class="fa-solid fa-trash"></i>
+                </div>
+            </button>
         </mat-card-header>
         <ng-container *ngIf="isImage(banner.url);then image else video"></ng-container>
         <ng-template #video>

@@ -1,3 +1,16 @@
 .maischiquito {
     max-width: 700px;
 }
+
+.header-image {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.nombre-dueno-banner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 0;
+}
