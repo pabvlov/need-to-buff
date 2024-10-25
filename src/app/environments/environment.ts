@@ -1,6 +1,5 @@
 export const environment = {
-    //apiUrl: 'http://147.182.141.224:3000',
-    apiUrl: 'http://localhost:3000',
+    apiUrl: '/api',
     endpoints: {
         renew: '/auth/renew',
         login: '/auth/login',
