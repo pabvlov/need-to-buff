@@ -4,6 +4,7 @@ import { UserService } from '../../utils/services/user.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../utils/services/auth.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-choose-gym-landing',
@@ -33,5 +34,9 @@ export class ChooseGymLandingComponent implements OnInit, AfterContentInit {
   logout() { // removemos token jwt del localstorage, por lo tanto desloguea al usuario y lo manda al inicio
     this.authService.logout();
   }  
+
+  get imagePath() {
+    return environment.apiUrl + '/profiles/';
+  }
 
 }

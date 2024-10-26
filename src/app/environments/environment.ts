@@ -1,5 +1,5 @@
 export const environment = {
-    apiUrl: '/api',
+    apiUrl: 'http://localhost:3000',
     endpoints: {
         renew: '/auth/renew',
         login: '/auth/login',
@@ -44,5 +44,6 @@ export const environment = {
         uploadImage: '/element/image/upload',
         deleteContent: '/community/banner/delete',
         createComment: '/community/comment/upload',
+        changeLogoPicture: '/community/logo/upload',
     }
 }

@@ -58,6 +58,17 @@ export class CommunityService {
     athletes: [],
   }
 
+  changeProfilePicture(file: File, id_community: number): Observable<PostImage> {
+    let body = new FormData();
+    body.append('file', file);
+    body.append('id_community', id_community.toString());
+    const httpOptions = {
+      headers: new HttpHeaders({
+      })
+    };
+    return this.httpClient.put<PostImage>(environment.apiUrl + environment.endpoints.changeLogoPicture, body, httpOptions);
+  }
+
   getSelectedEstablishment(id_establishment: number): Establishment {
     return this.selectedEstablishment = this.establishments.find(est => est.id === id_establishment)!;
   }

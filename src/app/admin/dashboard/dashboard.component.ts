@@ -18,6 +18,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ScreenLoadingComponent } from '../../common/screen-loading/screen-loading.component';
 import {MatChipsModule} from '@angular/material/chips';
 import { BannersComponent } from './banners/banners.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,7 +37,9 @@ import { BannersComponent } from './banners/banners.component';
     MatFormFieldModule,
     ScreenLoadingComponent,
     MatChipsModule,
-    BannersComponent
+    BannersComponent,
+    ConfigurationComponent,
+    MatIconModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'

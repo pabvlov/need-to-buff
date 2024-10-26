@@ -265,3 +265,8 @@ p {
     padding: 10px 20px;
     text-align: justify;
 }
+
+.date {
+    font-size: 0.8rem;
+    color: #9b9b9b;
+}

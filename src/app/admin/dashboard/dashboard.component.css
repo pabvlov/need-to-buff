@@ -12,3 +12,10 @@
     display: flex;
 }
 
+.svg {
+    width: 30px;
+    height: 30px;
+    fill: var(--secondary-color);
+    /* change svg color */
+    stroke: var(--secondary-color);
+}

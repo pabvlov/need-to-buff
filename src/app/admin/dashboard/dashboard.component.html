@@ -42,15 +42,22 @@
             <li>
                 <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
                     [ngClass]="{active: show == 'planification'}" (click)="show = 'planification'"
-                    data-bs-placement="right" data-bs-original-title="Groups">
+                    data-bs-placement="right" data-bs-original-title="planifications">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
             </li>
             <li>
                 <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
                     [ngClass]="{active: show == 'banners'}" (click)="show = 'banners'"
-                    data-bs-placement="right" data-bs-original-title="Groups">
+                    data-bs-placement="right" data-bs-original-title="banners">
                     <i class="fa-solid fa-tv"></i>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
+                    [ngClass]="{active: show == 'config'}" (click)="show = 'config'"
+                    data-bs-placement="right" data-bs-original-title="config">
+                    <img src="../../../assets/images/settings-svgrepo-com.svg" alt="" class="svg">
                 </a>
             </li>
         </ul>
@@ -99,6 +106,7 @@
         <app-planification *ngIf="show == 'planification'" [id_establishment]="id_establishment"></app-planification>
         <app-class *ngIf="show == 'class'" [idClass]="classSelected"></app-class>
         <app-banners *ngIf="show == 'banners'"></app-banners>
+        <app-configuration [community]="community" [establishments]="establishments" *ngIf="show == 'config'"></app-configuration>
         <div *ngIf="show == 'dashboard'">
             <mat-chip-set aria-label="Fish selection">
                 <mat-chip>{{ establishments.length }} {{ establishments.length == 1 ? 'establecimiento': 'establecimientos' }}</mat-chip>

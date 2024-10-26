@@ -1,0 +1,72 @@
+<!-- label image -->
+<label for="profile_picture" class="picture"
+    [ngStyle]="{'background-image': 'url(' + (community.logo != null ? imagePath + community.logo : '../../../assets/images/image.png') + ')'}">
+</label>
+<input class="profile-picture" (change)="changePicture($event)" id="profile_picture" type="file" hidden />
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <form [formGroup]="communityForm" (ngSubmit)="onSubmit()">
+                <div>
+                    <mat-form-field class="input">
+                        <mat-label for="social_reason">Razón Social:</mat-label>
+                        <input id="social_reason" formControlName="social_reason" matInput placeholder="">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="input">
+                        <mat-label for="acronym">Acrónimo:</mat-label>
+                        <input id="acronym" formControlName="acronym" matInput placeholder="">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="input">
+                        <mat-label for="contact">Contacto:</mat-label>
+                        <input id="contact" formControlName="contact" matInput placeholder="Enter text">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="input">
+                        <mat-label for="facebook">Facebook:</mat-label>
+                        <input id="facebook" formControlName="facebook" matInput placeholder="Enter text">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="input">
+                        <mat-label for="instagram">Instagram:</mat-label>
+                        <input id="instagram" formControlName="instagram" matInput placeholder="Enter text">
+                    </mat-form-field>
+                </div>
+                <button type="submit" class="btn-ntb">Guardar</button>
+            </form>
+        </div>
+        <div class="col-lg-8 col-md-6 col-sm-12">
+            <form [formGroup]="establishmentForm" (ngSubmit)="onSubmit()">
+                <div>
+                    <div>
+                        <mat-form-field class="input">
+                            <mat-label for="name">Razón Social:</mat-label>
+                            <input id="name" formControlName="name" matInput placeholder="" [value]="establishment?.name">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field class="input">
+                            <mat-label for="address">Acrónimo:</mat-label>
+                            <input id="address" formControlName="address" matInput [value]="establishment?.address">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field class="input">
+                            <mat-label for="capacity">Contacto:</mat-label>
+                            <input id="capacity" formControlName="capacity" matInput [value]="establishment?.capacity">
+                        </mat-form-field>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-ntb">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+</div>

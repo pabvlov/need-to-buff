@@ -43,6 +43,14 @@
     background-color: #1900ff;
 }
 
+.btn-ntb {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 strong {
     color: #03BB85;
 }
@@ -54,7 +62,7 @@ strong {
 
 button {
     border: 0;
-    
 }
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

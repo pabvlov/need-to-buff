@@ -6,7 +6,7 @@
                 routerLinkActive="router-link-active"  
                 *ngFor="let community of communities" 
                 class="community" 
-                [ngStyle]="{'background-image': 'url(' + community.logo + ')'}">
+                [ngStyle]="{'background-image': 'url(' + imagePath + community.logo + ')'}">
                 <h2 class="color-primary text-center">{{ community.acronym }}</h2>
             </a>
             
