@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
 import { CommunityService } from '../../../utils/services/community.service';
+import { SwalService } from '../../../utils/services/swal.service';
 
 @Component({
   selector: 'app-configuration',
@@ -32,7 +33,8 @@ export class ConfigurationComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private communityService: CommunityService
+    private communityService: CommunityService,
+    private swal: SwalService
   ) {
 
   }
@@ -63,7 +65,39 @@ export class ConfigurationComponent {
   }
 
   onSubmit() {
-    console.log(this.communityForm.value);
+    this.swal.loading();
+    this.communityService.editCommunity(
+      this.id_community,
+      this.communityForm.value.social_reason!,
+      this.communityForm.value.acronym!,
+      this.communityForm.value.contact!,
+      this.communityForm.value.facebook!,
+      this.communityForm.value.instagram!).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.swal.success('¡Datos actualizados!', "Los datos de la comunidad han sido actualizados correctamente.");
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  onEstablishmentSubmit() {
+    this.swal.loading();
+    this.communityService.editEstablishment(
+      this.id_establishment,
+      this.establishmentForm.value.name!,
+      this.establishmentForm.value.address!,
+      this.establishmentForm.value.capacity!).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.swal.success('¡Datos actualizados!', "Los datos del establecimiento han sido actualizados correctamente.");
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
   communityForm = new FormGroup({
@@ -99,5 +133,7 @@ export class ConfigurationComponent {
       });
     }
   }
+
+  
 
 }

@@ -104,4 +104,26 @@ export class CommunityService {
     return this.httpClient.delete<SimplePost>(environment.apiUrl + environment.endpoints.deleteContent + `?id=${id}`);
   }
 
+  editCommunity(id_community: number, social_reason: string, acronym: string, contact: number, facebook: string, instagram: string): Observable<SimplePost> {
+    let body = {
+      id_community,
+      social_reason,
+      acronym,
+      contact,
+      facebook,
+      instagram
+    };
+    return this.httpClient.put<SimplePost>(environment.apiUrl + environment.endpoints.editCommunity, body);
+  }
+
+  editEstablishment(id_establishment: number, name: string, address: string, capacity: number): Observable<SimplePost> {
+    let body = {
+      id_establishment,
+      name,
+      address,
+      capacity
+    };
+    return this.httpClient.put<SimplePost>(environment.apiUrl + environment.endpoints.editEstablishment, body);
+  }
+
 }
